@@ -2,9 +2,9 @@
 
 **Source:** Saved Cisco CML configuration export from 2 November 2026 (not live operational outputs).
 
-This stage provides **selected, sanitized configuration excerpts**, not complete running configurations. Authentication keys, AAA users, SNMP credentials and unrelated lines have been intentionally omitted; these fragments are **not deployable backups**.
+This stage provides **full substantive sanitized configurations from the saved 2 November 2026 CML export**. All exported interface stanzas, including unused ports, are included (ACC1 19, ACC2 19, DIST1 36, DIST2 32). Credential-bearing lines are redacted and redundant blank separators may be condensed, so the files are **not deployable backups**.
 
-## Device configuration excerpts
+## Sanitized full device snapshots
 
 | Device | Role | Snapshot |
 | --- | --- | --- |
