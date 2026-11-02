@@ -23,7 +23,7 @@ The lab models an Amsterdam HQ, Rotterdam branch, two independent ISP autonomous
 | Security | ASA active/standby, inside/outside/DMZ, NAT/PAT, ACLs, PBR |
 | Infrastructure | DHCP, DNS, syslog, TACACS+, NTP, SNMPv3, NMS and backups |
 
-See [architecture](docs/architecture.md), [progress / test status](docs/progress.md), and [ASA packet-flow test](docs/asa-traffic-flow.md).
+See [architecture](docs/architecture.md), [CML export inventory](docs/cml-export-inventory.md), [progress / test status](docs/progress.md), and [ASA packet-flow test](docs/asa-traffic-flow.md).
 
 ## Current verified checkpoints
 
