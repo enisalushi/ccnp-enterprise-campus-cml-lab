@@ -1,11 +1,11 @@
 # Device configurations
 
-Configurations are being added **incrementally** using the saved CML export. The published files are **selected sanitized excerpts, not complete, deployable running configurations**.
+Configurations are being added **incrementally** using the saved CML export. The four HQ campus files are now **full substantive, sanitized configuration snapshots** of the saved CML export. All original interface stanzas are included; credential commands are removed or replaced with redaction comments. These are **not deployable backups**.
 
-## Published: HQ switching (Stage 1)
+## Published: HQ switching (Stage 1 — full sanitized snapshots)
 
-- [AMS-HQ-ACC1](hq/AMS-HQ-ACC1.cfg) and [AMS-HQ-ACC2](hq/AMS-HQ-ACC2.cfg) — LACP uplinks, trunks, access and management VLANs.
-- [AMS-HQ-DIST1](hq/AMS-HQ-DIST1.cfg) and [AMS-HQ-DIST2](hq/AMS-HQ-DIST2.cfg) — trunks, STP priorities, SVIs, HSRP and OSPF. DIST1 also includes PBR.
+- [AMS-HQ-ACC1](hq/AMS-HQ-ACC1.cfg) and [AMS-HQ-ACC2](hq/AMS-HQ-ACC2.cfg) — all exported interfaces plus LACP, trunks, access, management, AAA references and monitoring settings.
+- [AMS-HQ-DIST1](hq/AMS-HQ-DIST1.cfg) and [AMS-HQ-DIST2](hq/AMS-HQ-DIST2.cfg) — all exported interfaces plus trunks, STP priorities, SVIs, HSRP, OSPF, monitoring and management settings. DIST1 also includes PBR.
 - [Implementation and verification notes](../docs/hq-switching-implementation.md).
 
 **Export review finding:** DIST1's PBR route-map ACL reference does not exactly match the ACL definition; check the live device before assuming that policy works.
