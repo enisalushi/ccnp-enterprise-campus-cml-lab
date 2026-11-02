@@ -53,7 +53,7 @@ The saved configurations contain these *configured* features. A configured featu
 
 ### Notes before publishing full configurations
 
-- The ASA outside security interface is named **`outisde`** (sic) in the exported configurations. Cisco ASA treats this as a literal `nameif`; future packet-tracer/NAT/ACL commands must use the configured spelling until it is corrected consistently.
+- The archived ASA configuration used **`outisde`** (sic); the lab owner reports correcting the current interface name to **`outside`** after the export. The original export remains a historical snapshot. Confirm dependent NAT, route and MTU references in the running configuration before documenting the fix as verified.
 - The VLAN 10 PBR route-map is present on **DIST1** in this export. Verify HSRP failover behavior before describing the forwarding policy as redundant on both distribution switches.
 - Raw saved configurations include credential/hash material, SNMPv3 authentication data, TACACS keys, IKE pre-shared keys, and certificate material. **Do not upload the original YAML or raw config files into this public repository.**
 - Redacted snapshots omit credential and PKI commands, so they are documentation, **not deployable backups**.
