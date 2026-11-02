@@ -23,7 +23,7 @@ The lab models an Amsterdam HQ, Rotterdam branch, two independent ISP autonomous
 | Security | ASA active/standby, inside/outside/DMZ, NAT/PAT, ACLs, PBR |
 | Infrastructure | DHCP, DNS, syslog, TACACS+, NTP, SNMPv3, NMS and backups |
 
-See [architecture](docs/architecture.md), [CML export inventory](docs/cml-export-inventory.md), [progress / test status](docs/progress.md), and [ASA packet-flow test](docs/asa-traffic-flow.md).
+See [HQ switching implementation](docs/hq-switching-implementation.md), [architecture](docs/architecture.md), [CML export inventory](docs/cml-export-inventory.md), [progress / test status](docs/progress.md), and [ASA packet-flow test](docs/asa-traffic-flow.md).
 
 ## Current verified checkpoints
 
@@ -44,14 +44,21 @@ docs/
   progress.md
   asa-traffic-flow.md
   verification.md
+  cml-export-inventory.md
+  hq-switching-implementation.md
 configs/
   README.md
+  hq/
+    AMS-HQ-ACC1.cfg
+    AMS-HQ-ACC2.cfg
+    AMS-HQ-DIST1.cfg
+    AMS-HQ-DIST2.cfg
 topology/
   README.md
   Topology.png
 ```
 
-**No CML YAML export is published.** The intention is to share documentation and topology diagrams/screenshots, then add **sanitized device configurations and verification outputs** as individual milestones are completed. This keeps the repository readable without distributing a complete runnable lab file.
+**No CML YAML export is published.** Four **selected, sanitized HQ switching configuration excerpts** are published under [configs/hq/](configs/hq/). Other device snapshots and real verification outputs will be added by milestone. This keeps the repository readable without distributing a complete runnable lab file.
 
 ## Workflow for future updates
 
