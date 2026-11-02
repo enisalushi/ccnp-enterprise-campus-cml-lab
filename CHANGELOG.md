@@ -8,6 +8,13 @@
 - Added verification checklist and placeholders for future sanitized configurations.
 - Kept the Cisco CML YAML export out of the repository.
 
+## 2026-11-02 — Stage 1 HQ switching published
+
+- Added sanitized configuration excerpts for ACC1, ACC2, DIST1 and DIST2.
+- Added [HQ switching implementation and verification notes](docs/hq-switching-implementation.md).
+- Recorded PBR ACL reference mismatch and asymmetric allowed VLAN lists on ACC2 trunks.
+- Documented the ASA `outside` correction reported after the archived export.
+
 ## 2026-11-02 — CML export reviewed
 
 - Inspected a user-provided CML export: 28 nodes, 51 links, and saved configurations for 18 nodes.
