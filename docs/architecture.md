@@ -18,8 +18,8 @@
 - Rotterdam branch: **AS 65020**
 - ISP-A: **AS 65100**
 - ISP-B: **AS 65200**
-- Campus interior routing: OSPF **area 0**
+- OSPF process 10: **area 0** at HQ and **area 10** for GRE/branch interfaces (as seen in the saved CML configurations)
 - HQ first-hop redundancy: HSRP; branch: VRRP
 - WAN experimentation: GRE/IPsec
 
-This document lists intended design roles, not verification that every peering and failover case is currently operational. See [progress](progress.md).
+This document lists intended design roles, not verification that every peering and failover case is currently operational. See [progress](progress.md) and [export inventory](cml-export-inventory.md).
