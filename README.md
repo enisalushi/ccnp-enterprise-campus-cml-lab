@@ -58,7 +58,7 @@ topology/
   Topology.png
 ```
 
-**No CML YAML export is published.** Four **selected, sanitized HQ switching configuration excerpts** are published under [configs/hq/](configs/hq/). Other device snapshots and real verification outputs will be added by milestone. This keeps the repository readable without distributing a complete runnable lab file.
+**No CML YAML export is published.** Four **full substantive, sanitized HQ switching configuration snapshots** are published under [configs/hq/](configs/hq/). They include every interface stanza from the saved CML export, with authentication material omitted and blank separators condensed. Other device snapshots and real verification outputs will be added by milestone. This keeps the repository readable without distributing a complete runnable lab file.
 
 ## Workflow for future updates
 
