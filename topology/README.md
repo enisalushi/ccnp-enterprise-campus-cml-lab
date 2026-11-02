@@ -1,5 +1,9 @@
 # Topology
 
-The main README includes a simplified logical Mermaid diagram.
+![CCNP Enterprise Campus and WAN CML topology](Topology.png)
 
-**CML YAML is intentionally excluded** from this public repository. Future additions may include topology screenshots and explanatory diagrams. Device configurations will be tracked separately after sanitization.
+This is the current Cisco CML topology image for the evolving Amsterdam HQ, Rotterdam branch and dual-ISP campus lab.
+
+The image documents the lab layout. Device configurations, routing adjacencies and feature verification are tracked in the parent repository and `docs/`.
+
+The Cisco CML YAML export is intentionally not published.
