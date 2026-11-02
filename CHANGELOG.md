@@ -10,7 +10,7 @@
 
 ## 2026-11-02 — Stage 1 HQ switching published
 
-- Added sanitized configuration excerpts for ACC1, ACC2, DIST1 and DIST2.
+- Added sanitized configuration excerpts for ACC1, ACC2, DIST1 and DIST2; subsequently replaced them with **full substantive sanitized snapshots** covering all original interface stanzas.
 - Added [HQ switching implementation and verification notes](docs/hq-switching-implementation.md).
 - Recorded PBR ACL reference mismatch and asymmetric allowed VLAN lists on ACC2 trunks.
 - Documented the ASA `outside` correction reported after the archived export.
