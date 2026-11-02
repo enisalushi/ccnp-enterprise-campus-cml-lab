@@ -2,6 +2,9 @@
 
 ## Snapshot — 2026-11-02
 
+The CML export contains **28 nodes**, **51 links**, and **20 saved configuration files across 18 nodes**. Refer to the [export inventory](cml-export-inventory.md). This exported configuration snapshot is not a live operational verification.
+
+
 ### Included in the evolving lab
 
 - Amsterdam HQ campus and Rotterdam branch with two simulated ISP domains.
