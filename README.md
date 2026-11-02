@@ -8,39 +8,9 @@ A **work-in-progress enterprise network design** built and tested in Cisco Model
 
 The lab models an Amsterdam HQ, Rotterdam branch, two independent ISP autonomous systems, and supporting enterprise services.
 
-```mermaid
-flowchart TB
-    IA["ISP-A-R1<br/>AS 65100"]
-    IB["ISP-B-R1<br/>AS 65200"]
-    subgraph HQ["Amsterdam HQ | AS 65010"]
-       E1["AMS-HQ-EDGE1"]
-       E2["AMS-HQ-EDGE2"]
-       FW["AMS-HQ-FW1 / FW2<br/>ASA Active/Standby"]
-       PS["AMS-HQ-PERIM-SW1"]
-       D["AMS-HQ-DIST1 / DIST2"]
-       A["AMS-HQ-ACC1 / ACC2"]
-       S["Infrastructure services<br/>DNS/DHCP, TACACS+, syslog, NMS"]
-       E1 --- E2
-       E1 --- FW
-       E2 --- FW
-       FW --- PS
-       PS --- D
-       D --- A
-       D --- S
-    end
-    subgraph BR["Rotterdam branch | AS 65020"]
-       R["RTM-BR-R1 / RTM-BR-R2"]
-       BA["RTM-BR-ACC1"]
-       C["Branch endpoints"]
-       R --- BA
-       BA --- C
-    end
-    IA --- E1
-    IB --- E2
-    E2 -. "GRE / IPsec lab" .- R
-```
+![Cisco CML Enterprise Campus and WAN topology](topology/Topology.png)
 
-*Logical overview only; it simplifies the real interconnections. The CML topology screenshot is the visual reference for exact lab placement and links.*
+*Current Cisco CML topology screenshot — Amsterdam HQ, Rotterdam branch, two ISP autonomous systems, firewall pair, and supporting services. Interface and link details should be verified against the current CML lab.*
 
 ## Technologies in the lab
 
@@ -78,6 +48,7 @@ configs/
   README.md
 topology/
   README.md
+  Topology.png
 ```
 
 **No CML YAML export is published.** The intention is to share documentation and topology diagrams/screenshots, then add **sanitized device configurations and verification outputs** as individual milestones are completed. This keeps the repository readable without distributing a complete runnable lab file.
