@@ -1,29 +1,21 @@
-# Device configurations
+# Saved device and service configurations
 
-Configurations are being added **incrementally** using the saved CML export. The four HQ campus files are now **full substantive, sanitized configuration snapshots** of the saved CML export. All original interface stanzas are included; credential commands are removed or replaced with redaction comments. These are **not deployable backups**.
+**Source:** Cisco CML export, 2026-11-02. The 20 files below are complete substantive **sanitized configuration snapshots** from the exported node files. All network-device interface stanzas are retained. Secrets and certificates are removed; these are **not deployable backups**.
 
-## Published: HQ switching (Stage 1 — full sanitized snapshots)
+| Folder | Exported files | Notes |
+| --- | ---: | --- |
+| [HQ campus & edge](hq/) | 6 | ACC1, ACC2, DIST1, DIST2, EDGE1, EDGE2 |
+| [Branch](branch/) | 3 | RTM-BR-ACC1, RTM-BR-R1, RTM-BR-R2 |
+| [ISP simulation](isp/) | 2 | ISP-A-R1, ISP-B-R1 |
+| [Perimeter](security/) | 3 | FW1, FW2, perimeter switch |
+| [Infrastructure services](services/) | 6 | DHCP/DNS (2), syslog (1), TACACS+ (2), NMS (1) |
 
-- [AMS-HQ-ACC1](hq/AMS-HQ-ACC1.cfg) and [AMS-HQ-ACC2](hq/AMS-HQ-ACC2.cfg) — all exported interfaces plus LACP, trunks, access, management, AAA references and monitoring settings.
-- [AMS-HQ-DIST1](hq/AMS-HQ-DIST1.cfg) and [AMS-HQ-DIST2](hq/AMS-HQ-DIST2.cfg) — all exported interfaces plus trunks, STP priorities, SVIs, HSRP, OSPF, monitoring and management settings. DIST1 also includes PBR.
-- [Implementation and verification notes](../docs/hq-switching-implementation.md).
+The service-node total is 6 files for 4 nodes, giving 20 config files across 18 configured nodes. The other 10 CML nodes are endpoints without saved configuration files.
 
-**Export review finding:** DIST1's PBR route-map ACL reference does not exactly match the ACL definition; check the live device before assuming that policy works.
+Read [HQ implementation](../docs/hq-switching-implementation.md), [WAN/branch](../docs/wan-branch-implementation.md), [ASA perimeter](../docs/perimeter-security.md), [services](../docs/infrastructure-services.md), and [known issues](../docs/review-findings.md).
 
+## Confidentiality
 
+Removed before publication: local account passwords/hashes, TACACS+ shared secrets and user passwords, SNMPv3 auth/privacy credentials, OSPF/BGP authentication passwords, IKE PSKs, ASA failover secrets and private certificate contents. A blank/redacted value is not a usable device command.
 
-Suggested future grouping:
-
-- `hq/` — campus distribution, access and WAN edge
-- `branch/` — Rotterdam routers and access switch
-- `isp/` — ISP simulation
-- `security/` — sanitized ASA configuration
-- `servers/` — redacted supporting service configuration
-
-Never publish passwords, hashes, SNMPv3 auth/privacy secrets, TACACS keys, VPN pre-shared keys, private certificates or tokens. A `.gitignore` cannot protect secrets pasted into committed text.
-
-## Export snapshot
-
-The CML export reviewed on 2026-11-02 contained 20 saved configuration file entries from 18 nodes. See [configuration inventory](../docs/cml-export-inventory.md).
-
-Before committing a sanitized config, verify all credential material is absent. Credential redaction markers make the document non-deployable by design.
+Never upload the original CML export or raw device configs to the public repo. The `.gitignore` is not a substitute for manual secret review.

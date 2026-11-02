@@ -14,8 +14,8 @@ The CML export contains **28 nodes**, **51 links**, and **20 saved configuration
 
 ### Published artifacts
 
-- HQ switching and routing: four full substantive sanitized configuration snapshots for ACC1, ACC2, DIST1 and DIST2, including all interfaces from the saved export.
-- [HQ implementation and verification notes](hq-switching-implementation.md).
+- **All 20 saved configuration files from all 18 configured nodes** are now published as sanitized snapshots (HQ, branch, ISP, perimeter, and services). Full network-interface stanzas are preserved.
+- [HQ implementation](hq-switching-implementation.md), [WAN/branch](wan-branch-implementation.md), [perimeter](perimeter-security.md), [services](infrastructure-services.md), and [review findings](review-findings.md).
 - DIST1 saved PBR route-map ACL naming mismatch and DIST1-only PBR application noted for follow-up.
 - ASA `outside` interface spelling corrected by the lab owner after the uploaded export; current running-config evidence not yet attached.
 
@@ -34,7 +34,7 @@ The CML export contains **28 nodes**, **51 links**, and **20 saved configuration
 ### Next milestones
 
 1. Restore or replace the temporary test ACL as intended, then validate the resulting forwarding path.
-2. Capture current per-device running configurations, sanitize secrets and document them individually.
+2. Re-export current running configurations when possible to capture any changes made after 2026-11-02, particularly the ASA `outside` nameif fix.
 3. Verify Internet breakout from the HQ and branch VLANs.
 4. Measure ASA failover convergence and packet loss during a controlled test.
 5. Add changes after each new lab stage with dated results.

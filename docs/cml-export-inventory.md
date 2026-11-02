@@ -51,19 +51,18 @@ The saved configurations contain these *configured* features. A configured featu
 | ASA inside PAT | `AMS-HQ-FW1` exported configuration |
 | TACACS+ / SNMP | Several routers and switches |
 
-### Notes before publishing full configurations
+### Notes on the published sanitized configurations
 
 - The archived ASA configuration used **`outisde`** (sic); the lab owner reports correcting the current interface name to **`outside`** after the export. The original export remains a historical snapshot. Confirm dependent NAT, route and MTU references in the running configuration before documenting the fix as verified.
 - The VLAN 10 PBR route-map is present on **DIST1** in this export. Verify HSRP failover behavior before describing the forwarding policy as redundant on both distribution switches.
 - Raw saved configurations include credential/hash material, SNMPv3 authentication data, TACACS keys, IKE pre-shared keys, and certificate material. **Do not upload the original YAML or raw config files into this public repository.**
 - Redacted snapshots omit credential and PKI commands, so they are documentation, **not deployable backups**.
 
-## Next publication milestones
+## Publication status
 
-1. **Completed:** publish full substantive sanitized HQ access and distribution configuration snapshots (all interfaces preserved; credentials removed).
-2. Attach real `show etherchannel summary`, `show standby brief`, and `show ip ospf neighbor` verification results.
-3. Publish edge/branch BGP and GRE/IPsec configuration snapshots with PSKs and authentication fields removed.
-4. Publish sanitized ASA configurations and verify intended ACL, NAT and active/standby failover behavior.
-5. Add infrastructure service setups with shared credentials removed.
+- **Completed:** All 20 saved configuration files have been published in [configs](../configs/), covering HQ, WAN/branch, ISP, ASA/perimeter and services.
+- The original CML YAML and all sensitive credential material remain excluded. The TACACS+ service file contains intentionally incomplete user/client blocks.
+- **Outstanding:** obtain dated operational outputs and verify current behaviour (EtherChannel, HSRP/VRRP, BGP/OSPF, IPsec, ASA NAT/ACL and failover).
+- See [review findings](review-findings.md) for items to check.
 
 [Back to project overview](../README.md)

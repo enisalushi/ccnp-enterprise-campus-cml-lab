@@ -2,7 +2,7 @@
 
 **Source:** Saved Cisco CML configuration export from 2 November 2026 (not live operational outputs).
 
-This stage provides **full substantive sanitized configurations from the saved 2 November 2026 CML export**. All exported interface stanzas, including unused ports, are included (ACC1 19, ACC2 19, DIST1 36, DIST2 32). Credential-bearing lines are redacted and redundant blank separators may be condensed, so the files are **not deployable backups**.
+This stage provides **full substantive sanitized configurations from the saved 2 November 2026 CML export**. All exported interface stanzas, including unused ports, are included (ACC1 19, ACC2 19, DIST1 36, DIST2 32). Credential-bearing lines are redacted; the complete original interface stanzas are preserved, so the files are **not deployable backups**.
 
 ## Sanitized full device snapshots
 
@@ -21,7 +21,7 @@ This stage provides **full substantive sanitized configurations from the saved 2
 - DIST1 and DIST2 interconnect using **Po10**.
 - VLAN 999 is the trunk native VLAN.
 - Access assignments include users (VLAN 10), voice (20), video (30), critical (40), management (50), and guest (60).
-- Configured access-port BPDU Guard / PortFast settings and DHCP-snooping trust are visible in excerpts; globally enforced DHCP snooping requires separate verification.
+- Configured access-port BPDU Guard / PortFast settings and DHCP-snooping trust are visible in archived configs; globally enforced DHCP snooping requires separate verification.
 
 ### STP root preference
 
@@ -47,7 +47,7 @@ DIST1 and DIST2 host the HQ SVIs and share HSRP virtual gateways. **HSRP version
 | 70 | 10.10.70.1 | 10.10.70.2 | 10.10.70.3 | DIST1 |
 | 80 (firewall transit) | 10.255.100.1 | 10.255.100.2 | 10.255.100.3 | DIST1 |
 
-OSPF **process 10 / area 0** uses explicit router IDs and `passive-interface default`. Routed uplinks to HQ EDGE1/EDGE2 are non-passive and have message-digest authentication configured. The authentication keys were removed from the published excerpts.
+OSPF **process 10 / area 0** uses explicit router IDs and `passive-interface default`. Routed uplinks to HQ EDGE1/EDGE2 are non-passive and have message-digest authentication configured. The authentication keys were removed from the published sanitized configs.
 
 ## Important follow-up checks from the saved export
 

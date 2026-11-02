@@ -22,8 +22,15 @@
 - Corrected OSPF documentation to distinguish HQ area 0 and WAN/branch area 10.
 - Kept the original YAML and raw credential-bearing configurations out of this public repository.
 
+## 2026-11-02 — Full saved configuration collection published
+
+- Replaced the four HQ configuration files with the complete sanitized configurations from the original export.
+- Published remaining HQ edge, branch, ISP, perimeter and service files: **20 files across 18 configured nodes**.
+- Added detailed WAN/branch, ASA, services and review-finding documents.
+- Retained the original YAML outside GitHub and explicitly excluded credentials/certificates from public snapshots.
+
 ## Upcoming
 
-- Capture sanitized configuration snapshots and new test evidence.
+- Re-export later CML changes and collect live verification evidence.
 - Validate final firewall ACL policy, Internet paths and HA failover.
 - Continue publishing new milestones as commits.

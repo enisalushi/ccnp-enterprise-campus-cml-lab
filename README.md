@@ -23,7 +23,15 @@ The lab models an Amsterdam HQ, Rotterdam branch, two independent ISP autonomous
 | Security | ASA active/standby, inside/outside/DMZ, NAT/PAT, ACLs, PBR |
 | Infrastructure | DHCP, DNS, syslog, TACACS+, NTP, SNMPv3, NMS and backups |
 
-See [HQ switching implementation](docs/hq-switching-implementation.md), [architecture](docs/architecture.md), [CML export inventory](docs/cml-export-inventory.md), [progress / test status](docs/progress.md), and [ASA packet-flow test](docs/asa-traffic-flow.md).
+## Implementation documentation
+
+- [HQ Switching: LACP, STP, HSRP, OSPF, PBR](docs/hq-switching-implementation.md)
+- [WAN, BGP, OSPF and Branch](docs/wan-branch-implementation.md)
+- [ASA Perimeter and Failover](docs/perimeter-security.md)
+- [Infrastructure Services: DHCP, DNS, TACACS+, Syslog, NMS](docs/infrastructure-services.md)
+- [Configuration Review Findings](docs/review-findings.md)
+- [CML Inventory](docs/cml-export-inventory.md) and [Progress / Test Status](docs/progress.md)
+
 
 ## Current verified checkpoints
 
@@ -33,32 +41,19 @@ See [HQ switching implementation](docs/hq-switching-implementation.md), [archite
 
 Other features are documented as lab design/exercises until their latest running state and verification are captured. See [progress](docs/progress.md) for outstanding testing.
 
-## Repository layout
+## Published configuration snapshots
 
-```text
-README.md
-CHANGELOG.md
-docs/
-  architecture.md
-  addressing.md
-  progress.md
-  asa-traffic-flow.md
-  verification.md
-  cml-export-inventory.md
-  hq-switching-implementation.md
-configs/
-  README.md
-  hq/
-    AMS-HQ-ACC1.cfg
-    AMS-HQ-ACC2.cfg
-    AMS-HQ-DIST1.cfg
-    AMS-HQ-DIST2.cfg
-topology/
-  README.md
-  Topology.png
-```
+| Folder | Contents |
+| --- | --- |
+| [configs/hq/](configs/hq/) | 6 HQ switches and WAN edge devices |
+| [configs/branch/](configs/branch/) | 3 Rotterdam routers / access devices |
+| [configs/isp/](configs/isp/) | 2 simulated ISP routers |
+| [configs/security/](configs/security/) | 2 ASA firewalls + perimeter switch |
+| [configs/services/](configs/services/) | 6 saved service files for 4 service nodes |
 
-**No CML YAML export is published.** Four **full substantive, sanitized HQ switching configuration snapshots** are published under [configs/hq/](configs/hq/). They include every interface stanza from the saved CML export, with authentication material omitted and blank separators condensed. Other device snapshots and real verification outputs will be added by milestone. This keeps the repository readable without distributing a complete runnable lab file.
+**20 files from 18 configured CML nodes** are published. All exported network interface stanzas are preserved. Credentials, authentication material and certificate private contents are redacted, so these are **non-deployable historical snapshots**. Ten other CML endpoints had no saved node configuration files in the export.
+
+**The CML YAML itself is not published.** The real [topology screenshot](topology/Topology.png) is the visual reference. The exported ASA configurations still show the original `outisde` nameif spelling; the owner reports correcting it in CML after that export.
 
 ## Workflow for future updates
 
