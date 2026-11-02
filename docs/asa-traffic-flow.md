@@ -14,7 +14,7 @@ The lab has separate ASA failover and stateful links, as well as inside, outside
 1. A test client uses `10.10.10.138`.
 2. Policy-based routing at campus distribution steers selected VLAN 10 traffic towards the ASA inside path.
 3. In an **earlier successful test**, ASA PAT translated traffic to `192.0.2.20`.
-4. The ASA outside next hop was `192.0.2.18`, allowing the test to reach `8.8.8.8`.
+4. The ASA outside next hop was `192.0.2.18`, allowing the test to reach `8.8.8.8`. In the exported ASA configuration, the outside `nameif` is spelled `outisde` (sic); use that literal interface name when validating current commands.
 
 VLAN 20 was described in the tested design as following regular OSPF forwarding rather than the same PBR path. **Do not assume every VLAN traverses the ASA.**
 
