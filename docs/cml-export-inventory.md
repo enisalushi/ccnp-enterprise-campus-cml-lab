@@ -60,7 +60,7 @@ The saved configurations contain these *configured* features. A configured featu
 
 ## Next publication milestones
 
-1. Publish individually reviewed, sanitized HQ access and distribution configuration snapshots.
+1. **Completed:** publish full substantive sanitized HQ access and distribution configuration snapshots (all interfaces preserved; credentials removed).
 2. Attach real `show etherchannel summary`, `show standby brief`, and `show ip ospf neighbor` verification results.
 3. Publish edge/branch BGP and GRE/IPsec configuration snapshots with PSKs and authentication fields removed.
 4. Publish sanitized ASA configurations and verify intended ACL, NAT and active/standby failover behavior.
