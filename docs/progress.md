@@ -14,7 +14,7 @@ The CML export contains **28 nodes**, **51 links**, and **20 saved configuration
 
 ### Published artifacts
 
-- HQ switching and routing: four sanitized device excerpts for ACC1, ACC2, DIST1 and DIST2.
+- HQ switching and routing: four full substantive sanitized configuration snapshots for ACC1, ACC2, DIST1 and DIST2, including all interfaces from the saved export.
 - [HQ implementation and verification notes](hq-switching-implementation.md).
 - DIST1 saved PBR route-map ACL naming mismatch and DIST1-only PBR application noted for follow-up.
 - ASA `outside` interface spelling corrected by the lab owner after the uploaded export; current running-config evidence not yet attached.
