@@ -1,4 +1,4 @@
-# Enterprise Campus & WAN Lab — Validated Implementations
+# CCNP LAB DESIGN SUMMARY
 
 **Cisco Modeling Labs Personal | Amsterdam HQ · Rotterdam Branch · Dual ISPs**
 
