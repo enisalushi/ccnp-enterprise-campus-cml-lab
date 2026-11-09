@@ -32,6 +32,7 @@ The lab models an Amsterdam HQ, Rotterdam branch, two independent ISP autonomous
 - **[9 November: CCNP LAB DESIGN SUMMARY](docs/ccnp-lab-design-summary-2026-11-09.md)**
 - [ASA Stateful TCP Failover](docs/asa-stateful-tcp-failover.md)
 - [IP SLA Stage 1.13 / Object Tracking](docs/ip-sla-object-tracking.md)
+- [Configuration Source and Fidelity (original CML files)](docs/configuration-source-and-fidelity.md)
 - [Configuration Review Findings](docs/review-findings.md)
 - [CML Inventory](docs/cml-export-inventory.md) and [Progress / Test Status](docs/progress.md)
 

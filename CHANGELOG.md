@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-11-09 — Topology screenshot replaced and source fidelity audited
+
+- Replaced `topology/Topology.png` with the user's newer full-resolution (1545 × 1093) CML screenshot.
+- Restored the complete original 744-line `configs/services/AMS-HQ-DNS-DHCP1/dnsmasq.conf`, including comments removed by the earlier condensed extraction.
+- Added a file-by-file provenance audit showing original CML source filenames and intentional secret/PKI redactions.
+- Kept the historical November 2 device snapshots separate from the November 9 topology and later operational tests.
+
 ## 2026-11-09 — CCNP LAB DESIGN SUMMARY published
 
 - Documented ASA stateful TCP failover: original TCP connection retained and HTTP GET returned 200 OK after role transition.

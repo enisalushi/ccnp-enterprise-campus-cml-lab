@@ -31,7 +31,7 @@ Cisco CML embeds file names such as `ios_config.txt`, `day0-config`, `boot.sh` a
 | AMS-HQ-FW2 | `day0-config` | [`AMS-HQ-FW2.cfg`](../configs/security/AMS-HQ-FW2.cfg) | 290 | Private PKI/cert block and credentials redacted |
 | AMS-HQ-PERIM-SW1 | `ios_config.txt` | [`AMS-HQ-PERIM-SW1.cfg`](../configs/security/AMS-HQ-PERIM-SW1.cfg) | 236 | Certificate chain and credentials redacted |
 
-**Integrity review:** For 16 saved files (11 IOS/IOS-XE configs plus 5 service-related files), the published snapshots retain the original line count, replacing only sensitive lines where applicable. The **744-line `dnsmasq.conf` has been restored from the original CML export**, including its explanatory comments. ASA FW1/FW2 and perimeter-switch source files include PKI/certificate blocks that are **intentionally omitted**, rather than published.
+**Integrity review:** For 17 saved files (11 IOS/IOS-XE configs plus 6 service-related files), the published snapshots retain the original line count, replacing only sensitive lines where applicable. The **744-line `dnsmasq.conf` has been restored from the original CML export**, including its explanatory comments. ASA FW1/FW2 and perimeter-switch source files include PKI/certificate blocks that are **intentionally omitted**, rather than published.
 
 ## What is still outdated?
 

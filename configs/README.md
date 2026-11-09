@@ -1,6 +1,6 @@
 # Saved device and service configurations
 
-**Source:** Cisco CML export, 2026-11-02. The 20 files below are complete substantive **sanitized configuration snapshots** from the exported node files. All network-device interface stanzas are retained. Secrets and certificates are removed; these are **not deployable backups**.
+**Source:** Original Cisco CML node configuration entries from export, 2026-11-02. See [configuration source and fidelity audit](../docs/configuration-source-and-fidelity.md) for original filenames and preservation details. The 20 files below are complete substantive **sanitized configuration snapshots** from the exported node files. All network-device interface stanzas are retained. Secrets and certificates are removed; these are **not deployable backups**.
 
 | Folder | Exported files | Notes |
 | --- | ---: | --- |
