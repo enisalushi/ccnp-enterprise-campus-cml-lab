@@ -1,6 +1,6 @@
 # Configuration source and fidelity
 
-The published configuration files are derived from the **original saved node configuration entries in the Cisco CML export dated 2 November 2026**. The newer [topology screenshot](../topology/Topology.png) was supplied on **9 November 2026**; it does **not** automatically update saved device configurations.
+The published configuration files have now been refreshed from the **9 November 2026 Cisco CML saved node export**. The former 2 November export is a historical baseline. The [topology screenshot](../topology/Topology.png) and the latest device files were both supplied on 9 November. See [current saved-state review](latest-cml-config-snapshot-2026-11-09.md).
 
 **Goal:** Preserve every original non-sensitive setting and interface. The public repository does **not** contain raw usernames/password hashes, SNMPv3 authentication secrets, TACACS keys, OSPF/BGP passwords, IKE pre-shared keys, ASA failover secrets or PKI certificate/private-key blocks. Sanitized files are **not deployable backups**.
 
@@ -8,7 +8,7 @@ The published configuration files are derived from the **original saved node con
 
 Cisco CML embeds file names such as `ios_config.txt`, `day0-config`, `boot.sh` and `dnsmasq.conf` within each node. GitHub uses a per-device folder/name so files cannot overwrite one another; their substantive content comes from the corresponding original entries.
 
-| CML node | CML source file | Published file | Source lines | Treatment |
+| CML node | CML source file | Published file | 2 Nov source lines | Treatment |
 | --- | --- | --- | ---: | --- |
 | ISP-A-R1 | `ios_config.txt` | [`ISP-A-R1.cfg`](../configs/isp/ISP-A-R1.cfg) | 176 | Line-preserving redaction |
 | ISP-B-R1 | `ios_config.txt` | [`ISP-B-R1.cfg`](../configs/isp/ISP-B-R1.cfg) | 179 | Line-preserving redaction |
@@ -35,6 +35,6 @@ Cisco CML embeds file names such as `ios_config.txt`, `day0-config`, `boot.sh` a
 
 ## What is still outdated?
 
-The original 2 November export predates the owner's corrected ASA `outside` interface spelling and later November 9 test results. Those later outcomes are documented in [CCNP LAB DESIGN SUMMARY](ccnp-lab-design-summary-2026-11-09.md), but are not automatically present in the older saved configurations.
+The new 9 November export confirms ASA FW1's corrected `outside`, while FW2 retains `outisde`. Separately, the owner added a `Null0` fallback to DIST2 **after** uploading this YAML; the posted DIST2 file therefore does not yet contain that addition. See [current export review](latest-cml-config-snapshot-2026-11-09.md).
 
-For a current configuration update, export and share a **new CML YAML**. It can be used as input without committing the YAML itself. Newer sanitized snapshots should be checked for secrets and compared with the existing files before replacement.
+Future updates can use a privately supplied newer CML YAML, with sensitive material removed from individual public configs and no raw YAML committed.

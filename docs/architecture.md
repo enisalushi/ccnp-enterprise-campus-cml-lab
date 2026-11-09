@@ -1,6 +1,6 @@
 # Architecture and device inventory
 
-**Snapshot:** 2 November 2026. This describes the lab design; consult current running configurations for exact interface mappings.
+**Saved configuration snapshot:** 9 November 2026 (28 nodes, 52 links). This describes the lab design; consult current running configurations for exact interface mappings. DIST2's subsequently added Null0 fallback was reported after the export and is not yet present in its published saved config.
 
 | Zone | Nodes | Purpose |
 | --- | --- | --- |

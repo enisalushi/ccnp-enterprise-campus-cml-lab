@@ -1,6 +1,6 @@
 # WAN, BGP, OSPF and branch implementation
 
-**Source:** Cisco CML saved configuration snapshot, 2026-11-02. Configured feature evidence only; no fresh live control-plane outputs included.
+**Source:** Cisco CML saved configuration snapshot, **2026-11-09**. Configured feature evidence only; no fresh live control-plane outputs included.
 
 ## Devices and ASNs
 
@@ -17,6 +17,10 @@
 - OSPF process 10 is present on HQ/branch routers, with **area 0** for HQ routing and **area 10** for the GRE/branch routing domain.
 - HQ EDGE1 router ID: `3.3.3.3`; HQ EDGE2: `4.4.4.4`. Branch router IDs: `7.7.7.7` / `8.8.8.8`.
 - HQ edge default routes use tracking objects pointing to ISP next-hops. Verify tracking state before relying on failover.
+
+### Latest ISP tracking, QoS and PBR
+
+The 9 November snapshot contains tracked ISP default routes on HQ EDGE1/EDGE2 (SLA/track 10 and 20), 1 Mbps WAN shaping, DSCP classification/marking, and GRE tunnel QoS policies. Both branch routers apply `PBR-BRANCH-INTERNET-HQ` to VLAN 110–160 subinterfaces. Both HQ edge routers apply `PBR-BRANCH-TO-DIST` on their GRE tunnels. These are saved configuration facts; runtime status remains unverified. [Detailed review](latest-cml-config-snapshot-2026-11-09.md).
 
 ### GRE over IPsec paths
 

@@ -1,6 +1,6 @@
-# Cisco CML export inventory — 2 November 2026
+# Cisco CML export inventory — 2 November 2026 (historical)
 
-This page records the **device and configuration inventory** from the user's CML export, not live runtime verification. The CML YAML itself is intentionally excluded from the public repository.
+This page records the **older 2 November** device and configuration inventory. The latest uploaded export (9 November) has **52 links** and refreshed all published device files. Read the [latest snapshot comparison](latest-cml-config-snapshot-2026-11-09.md). The CML YAML itself is intentionally excluded from the public repository.
 
 ## Snapshot facts
 
@@ -60,7 +60,7 @@ The saved configurations contain these *configured* features. A configured featu
 
 ## Publication status
 
-- **Completed:** All 20 saved configuration files have been published in [configs](../configs/), covering HQ, WAN/branch, ISP, ASA/perimeter and services.
+- **Completed:** All 20 saved configuration files have been refreshed from the **9 November** export in [configs](../configs/), covering HQ, WAN/branch, ISP, ASA/perimeter and services.
 - The original CML YAML and all sensitive credential material remain excluded. The TACACS+ service file contains intentionally incomplete user/client blocks.
 - **Outstanding:** obtain dated operational outputs and verify current behaviour (EtherChannel, HSRP/VRRP, BGP/OSPF, IPsec, ASA NAT/ACL and failover).
 - See [review findings](review-findings.md) for items to check.

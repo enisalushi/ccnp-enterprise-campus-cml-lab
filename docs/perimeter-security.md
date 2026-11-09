@@ -1,8 +1,8 @@
 # Perimeter switching and ASA failover
 
-**Source:** Cisco CML snapshot from 2026-11-02 plus previously observed testing.
+**Source:** Latest saved CML node configurations from **9 November 2026**, plus earlier live test observations. See [new export review](latest-cml-config-snapshot-2026-11-09.md).
 
-**Newer checkpoint (9 November):** A real, pre-existing DMZ HTTP TCP connection survived ASA failover, and five final ASA packet-tracer cases passed. See [full checkpoint](ccnp-lab-design-summary-2026-11-09.md) and [stateful TCP test](asa-stateful-tcp-failover.md). The saved configs linked below are still the older 2 November export. Saved configs are historical and have not been re-exported after the reported ASA outside-name correction.
+**Newer checkpoint (9 November):** A real, pre-existing DMZ HTTP TCP connection survived ASA failover, and five final ASA packet-tracer cases passed. See [full checkpoint](ccnp-lab-design-summary-2026-11-09.md) and [stateful TCP test](asa-stateful-tcp-failover.md). Published files now reflect the new export: **FW1 contains corrected `outside`**, but **FW2 still contains `outisde`**. Check actual failover configuration synchronization; these are saved configurations, not current runtime verification.
 
 ## Published configurations
 
@@ -25,9 +25,9 @@ The exported security-side addresses include:
 | Failover | `10.255.200.1/30` + standby `10.255.200.2` |
 | Stateful link | `10.255.201.1/30` + standby `10.255.201.2` |
 
-## Naming correction (historical export)
+## Outside interface name in latest saved export
 
-**The original YAML export uses `outisde`** (misspelled) as the ASA `nameif`, including NAT, MTU and route references. The lab owner reports having corrected this to **`outside` afterward**. The repository preserves the historical snapshot rather than changing the exported data. Obtain an updated saved configuration or running-config capture to verify that all dependent references were migrated.
+**FW1 now saves `nameif outside`**. **FW2 still saves `nameif outisde`**, and should be checked with a fresh standby runtime/after-HA-synchronization export. The repository preserves these actual saved values rather than silently normalizing them.
 
 The FW2 saved configuration reports `hostname AMS-HQ-FW1`. In an ASA failover pair, replicated configuration may include the same hostname; rely on `show failover` and unit roles, not hostname alone, to determine which chassis is active.
 

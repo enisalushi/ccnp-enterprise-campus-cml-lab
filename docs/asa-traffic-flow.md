@@ -16,7 +16,7 @@ The lab has separate ASA failover and stateful links, as well as inside, outside
 1. A test client uses `10.10.10.138`.
 2. Policy-based routing at campus distribution steers selected VLAN 10 traffic towards the ASA inside path.
 3. In an **earlier successful test**, ASA PAT translated traffic to `192.0.2.20`.
-4. The ASA outside next hop was `192.0.2.18`, allowing the test to reach `8.8.8.8`. The 2 November CML export had the `nameif` misspelled as `outisde`; the lab owner has since corrected it to `outside`. The saved export is historical, so verify the current `nameif`, NAT, MTU and route references on both ASA units before applying commands.
+4. The ASA outside next hop was `192.0.2.18`, allowing the test to reach `8.8.8.8`. The updated 9 November export confirms `nameif outside` on **FW1**. FW2's saved configuration still spells it `outisde`; validate both units' synchronized running state and dependent NAT/route references.
 
 VLAN 20 was described in the tested design as following regular OSPF forwarding rather than the same PBR path. **Do not assume every VLAN traverses the ASA.**
 

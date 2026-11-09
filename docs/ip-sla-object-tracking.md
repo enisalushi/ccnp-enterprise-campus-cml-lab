@@ -48,4 +48,8 @@ As verified in the reported routing checkpoints:
 
 **Next experiment:** Use a platform with `track` support, bind the SLA to the route, and verify withdrawal/recovery under controlled ASA reachability loss. Do not claim this test passed until route-table evidence is captured.
 
+## Clarification from the latest CML export
+
+The 9 November saved configurations have working **command definitions** for `track 10` on HQ EDGE1 and `track 20` on HQ EDGE2, tied to their respective ISP-side IP SLA operations and primary default routes. These are **different IOS-XE edge router images** from the IOL-L2 distribution node on which `track` was rejected. The owner's subsequent **DIST2 Null0 fallback** has been reported, but is absent from its published saved config. Do not confuse a floating Null0 route with a tracked primary route.
+
 [9 November CCNP lab checkpoint](ccnp-lab-design-summary-2026-11-09.md)
