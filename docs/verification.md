@@ -1,8 +1,8 @@
-# Verification checklist
+# CLI Verification and Evidence Capture
 
-Capture outputs with the device hostname, date, intended result and actual result.
+Use these commands to capture **real lab proof** for the [portfolio showcase](ccnp-lab-design-summary-2026-11-09.md). See [screenshot gallery guide](../evidence/README.md) for exact intended proof and images.
 
-## Cisco IOS / IOS-XE — Privileged EXEC
+**Cisco IOS/IOS-XE — Privileged EXEC mode:**
 
 ```cisco
 show ip interface brief
@@ -13,22 +13,32 @@ show vrrp brief
 show ip ospf neighbor
 show bgp ipv4 unicast summary
 show ip route
+show crypto isakmp sa
+show crypto ipsec sa
 ```
 
-## Cisco ASA — Privileged EXEC
+**HQ EDGE1 — Privileged EXEC mode, QoS-specific interfaces:**
+
+```cisco
+show policy-map interface Ethernet0/2
+show policy-map interface Tunnel10
+```
+
+**Cisco ASA — Privileged EXEC mode:**
 
 ```cisco
 show failover
 show interface ip brief
 show route
-show access-group
-show access-list
 show nat detail
 show xlate
-show logging
-packet-tracer input inside icmp 10.10.10.138 8 0 8.8.8.8 detailed
+show conn
+show access-group
+show access-list
 ```
 
-The latest documented packet-tracer result was **DROP due to the intentional inside ACL test**. Do not interpret this as a routing failure.
+The **five final ASA packet-tracer cases** in the [validated summary](ccnp-lab-design-summary-2026-11-09.md) produced their expected decisions. An earlier intentionally denied ICMP case was a negative policy test, not evidence that all later traffic was denied.
 
-Some commands vary by CML node image and software version.
+Capture packet/counter changes under generated traffic. IKEv1 phase state without increasing IPsec encrypt/decrypt counters does not, by itself, prove encrypted forwarding; likewise configured QoS policy without matched packet counters does not prove classification.
+
+Never post login secrets, SNMP authentication data, PSKs, private key material, or other confidential data in screenshots.

@@ -1,76 +1,93 @@
-# CCNP LAB DESIGN SUMMARY — 9 November 2026
+# Enterprise Campus & WAN Lab — Validated Implementations
 
-**Source:** Earlier ChatGPT discussion titled **CCNP LAB DESIGN SUMMARY**. The results below are the lab owner's reported checks through **9 November 2026**, not newly executed tests. The configurations already in `configs/` were exported **2 November 2026** and may therefore predate these fixes. No CML YAML is published.
+**Cisco Modeling Labs Personal | Amsterdam HQ · Rotterdam Branch · Dual ISPs**
 
-## Enterprise CML topology
+This page showcases **completed, tested scenarios** from my enterprise networking lab. The emphasis is on packet forwarding, redundancy and security behavior—not on configuration snippets alone.
 
-- Amsterdam HQ: ACC1/ACC2, DIST1/DIST2, EDGE1/EDGE2, ASA FW1/FW2, perimeter switch, infrastructure services
-- Rotterdam: BR-R1/BR-R2 and BR-ACC1
-- Upstream: ISP-A-R1 and ISP-B-R1
-- BGP ASNs: HQ **65010**, branch **65020**, ISP A **65100**, ISP B **65200**
-- HQ OSPF **area 0**; tunnel/branch **area 10**
-- Features: VLAN, LACP, Rapid PVST+, HSRP, VRRP, eBGP/iBGP, GRE/IPsec, NAT/PAT, PBR, ASA HA, DMZ and management services
+![Enterprise campus topology](../topology/Topology.png)
 
-The 2 November export contained **28 nodes**, **51 links**, and **20 saved config files for 18 configured nodes**; the [topology screenshot](../topology/Topology.png) is retained.
+## Project architecture
 
-## Verified discussion checkpoints
+An enterprise HQ and branch connected through two simulated ISP domains, with dual campus distribution switches, edge routers, VLAN segmentation, a DMZ and a Cisco ASA Active/Standby firewall pair.
 
-| Topic | Test result | Status |
-|---|---|---|
-| ASA Active/Standby | FW1/FW2 synced, failover checked | Passed |
-| Stateful TCP failover | Existing TCP session EDGE1 → published Python HTTP DMZ service retained on newly Active FW2; HTTP GET over original session returned **200 OK** | Passed |
-| Static DMZ NAT | `172.16.70.10` → `192.0.2.22`; real HTTP service TCP `8080` | Passed |
-| Dynamic PAT | VLAN 10 `10.10.10.138` → ASA outside `192.0.2.20`; previous live ICMP test **173/173** replies | Passed in tested scenario |
-| VLAN 10 HSRP | DIST1 → DIST2 switchover with **zero observed ping loss** in that run | Passed in tested scenario |
-| ASA policy | Five final `packet-tracer` checks returned expected ALLOW/DROP | Passed |
-| Default-route design | DIST1/DIST2 route via ASA `10.255.100.4` **AD 1**; DIST1 has a Null0 default in saved config; DIST2 Null0 added after upload (user-confirmed; exact AD not captured). EDGE and branch PBR attachments checked | Configured / checked |
-| IP SLA 10 | Probe to ASA inside `10.255.100.4` from `Vlan80`, **RTT 1 ms; 31 successes; 0 failures; return OK** | Passed |
-| Enhanced Object Tracking | `track` command unrecognized on **IOL-L2 IOS-XE 17.18.2** | Blocked |
-| Real branch-client Internet connection | ASA policy simulation passed, but end-to-end connection not demonstrated | Pending |
-| Full upstream/edge outage | End-to-end failure scenarios not demonstrated | Pending |
+- **HQ:** AS 65010 · **Branch:** AS 65020 · **ISP A / B:** AS 65100 / 65200
+- Built in **Cisco CML Personal**; [sanitized device configurations](../configs/) are available for technical review.
 
-An earlier deliberate ACL negative test denied VLAN 10 ICMP to 8.8.8.8. That was an *earlier stage*, not the final firewall-policy outcome.
+## Completed and validated scenarios
 
-## Five final ASA packet-tracer checks
+### 1. ASA Stateful Failover — Existing TCP Session Preserved
 
-These were reported as **five passing simulation outcomes**, not five application-level traffic tests.
+**Objective:** Demonstrate stateful firewall redundancy using an existing connection, rather than simply opening a new connection after failover.
 
-| Source | Destination and service | Expected and observed |
-|---|---|---|
-| HQ VLAN10 `10.10.10.138` | DMZ real IP `172.16.70.10:443` | **ALLOW** |
-| Guest VLAN60 `10.10.60.100` | DMZ `172.16.70.10:8080` | **DROP** |
-| HQ VLAN30 `10.10.30.100` | Internet `6.6.6.6:443` | **ALLOW** |
-| Branch VLAN120 `10.20.120.100` | Internet `6.6.6.6:443` | **ALLOW** |
-| EDGE1 outside `192.0.2.18` | Published DMZ `192.0.2.22:8080` | **ALLOW** |
+**Test:** A TCP session was opened from HQ EDGE1 (`192.0.2.18`) to a DMZ Python HTTP service published at `192.0.2.22:8080`. ASA failover was then triggered while the connection was established.
 
-## Stateful connection preservation
+**Observed result:** FW2 became Active, retained the original connection state, and the HTTP GET over the **same TCP session** returned **200 OK**.
 
-EDGE1 at `192.0.2.18` opened a TCP session to `192.0.2.22:8080`, mapped to a Python HTTP server at `172.16.70.10:8080`. After triggering ASA failover, FW2 became Active and showed the original connection. Sending an HTTP GET on that **same existing session** returned **200 OK**.
+**Demonstrated:** Connection-state replication and continued application communication for the tested flow.
 
-This proves state preservation for that tested flow. It **does not** establish zero packet loss for all traffic types, sub-second failover, or universal connection survival. See [ASA TCP failover experiment](asa-stateful-tcp-failover.md).
+[Detailed experiment and commands](asa-stateful-tcp-failover.md)
 
-## Default routing, inspection and limitations
+### 2. Static NAT — Publishing a DMZ HTTP Service
 
-DIST1/DIST2 use a static default route via ASA inside `10.255.100.4`, AD **1**. DIST1's saved file includes a floating default to `Null0` with AD **100**. DIST2's uploaded 9 November file has only the ASA default; the lab owner **added Null0 afterward** (exact administrative distance awaits a newer export). This is intended to take precedence over OSPF-learned defaults with AD **110**, preventing fallback that bypasses the ASA. However, the primary static route can remain installed even when the ASA is unreachable; a blackhole is then possible without route tracking.
+**Objective:** Make an internal application reachable through the firewall's outside interface.
 
-A previous **2 November** export showed DIST1 PBR with an ACL naming mismatch (`ACL-VLAN10-ASA-TEST` versus `ACL-VLAN-10-ASA-TEST`) and no matching DIST2 VLAN10 PBR. The 9 November uploaded export does not show the former distribution SVI PBR attachment, so this old naming issue should not be treated as a current active policy defect. Confirm actual current forwarding policy.
+| Element | Address |
+| --- | --- |
+| Internal DMZ server | `172.16.70.10:8080` |
+| Published outside endpoint | `192.0.2.22:8080` |
+| External test client | HQ EDGE1, `192.0.2.18` |
 
-## Stage 1.13: IP SLA / object tracking
+**Observed result:** The published service responded to the external test, including **HTTP 200 OK** during the stateful connection test.
 
-- Tested on **AMS-HQ-DIST1**, IOL-L2 IOS-XE **17.18.2**
-- `ip sla 10`: ICMP to ASA inside `10.255.100.4`, source `Vlan80`
-- Frequency **5 seconds**; timeout **1000 ms**
-- Observed **31 successes, 0 failures, RTT 1 ms, latest result OK**
-- **Object tracking remains incomplete:** `track` is unavailable on the tested image, so no tracked primary static route was verified.
+**Demonstrated:** Static NAT and the permitted outside-to-DMZ application path.
 
-See [IP SLA and object-tracking limitation](ip-sla-object-tracking.md).
+### 3. Dynamic PAT — HQ Client Internet Breakout
 
-## Next work
+**Objective:** Validate source translation for HQ user traffic routed through the ASA.
 
-1. Re-export sanitized current device configs (ASA `outside` spelling, updated ACL/NAT/PBR/default routes). Existing exports remain a historical snapshot.
-2. Verify the saved DIST1 PBR ACL name and whether DIST2 is configured to retain the desired inspection policy after HSRP failover.
-3. Complete SLA-driven tracked routing **on an image supporting object tracking**; test withdrawal and restoration.
-4. Run actual branch-client Internet traffic and controlled ISP/WAN outage scenarios.
-5. Capture dated `show` output for routing neighbors, ASA session/NAT state, and failover paths.
+**Test:** HQ VLAN 10 client `10.10.10.138` sent Internet-bound ICMP traffic through the perimeter firewall.
 
-**Scope:** The reported lab checks are documented, not independently repeated during this GitHub publication. The CML YAML and unsanitized credential-bearing files are not uploaded.
+**Observed result:** Translation through the ASA outside address `192.0.2.20` and **173/173 successful ICMP replies** in the recorded test.
+
+**Demonstrated:** Dynamic PAT and connectivity for the tested HQ client flow.
+
+### 4. HSRP — Distribution Gateway Failover
+
+**Objective:** Validate default-gateway redundancy between HQ distribution switches.
+
+**Test:** The VLAN 10 active HSRP gateway was moved from **AMS-HQ-DIST1** to **AMS-HQ-DIST2** during a continuous-ping test.
+
+**Observed result:** The gateway role changed and **zero ICMP packets were lost in that run**.
+
+**Demonstrated:** HSRP first-hop failover for the tested VLAN and traffic flow.
+
+### 5. ASA Access Control — Positive and Negative Policy Tests
+
+**Objective:** Validate segmentation and published-service access, including traffic that should be blocked.
+
+Five final ASA `packet-tracer` scenarios matched the expected outcomes:
+
+| Traffic | Expected and observed result |
+| --- | --- |
+| HQ user VLAN 10 → DMZ HTTPS (`443`) | **ALLOW** |
+| HQ guest VLAN 60 → DMZ HTTP (`8080`) | **DROP** |
+| HQ video VLAN 30 → external HTTPS (`443`) | **ALLOW** |
+| Branch VLAN 120 → external HTTPS (`443`) | **ALLOW** |
+| Outside EDGE1 → published DMZ HTTP (`192.0.2.22:8080`) | **ALLOW** |
+
+**Demonstrated:** The configured ASA policy logic behaved as expected in these **packet-tracer simulations**. The branch policy simulation is not presented as an independent live branch-client Internet test.
+
+## Verification gallery
+
+The [evidence capture and screenshot guide](../evidence/README.md) defines the exact command outputs and image captions for **NAT, xlate, conn, HSRP, traceroute, OSPF, BGP, IKEv1/IPsec and QoS**.
+
+Only the topology image is published so far. Screenshots of CLI outputs will be added after capture; **no terminal output or proof images are fabricated**. Each photo will demonstrate a specific observed state, and protocol topics will be added to this completed-project showcase only after their outputs confirm the expected behavior.
+
+## Implementation sources
+
+- [Sanitized configurations for HQ, branch, ISP, ASA and services](../configs/)
+- [ASA stateful failover test procedure](asa-stateful-tcp-failover.md)
+- [CML architecture and device inventory](architecture.md)
+- [Screenshot gallery and LinkedIn presentation plan](../evidence/README.md)
+
+*Validation results above are sourced from the lab's previously recorded tests. They describe the exact scenarios exercised, not universal uptime, zero packet loss for all traffic, or operational verification of every configured protocol.*

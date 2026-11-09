@@ -1,82 +1,51 @@
-# CCNP Enterprise Campus & WAN Lab | Cisco CML
+# CCNP Enterprise Campus & WAN Lab
 
-A **work-in-progress enterprise network design** built and tested in Cisco Modeling Labs (CML) Personal. This repository documents the lab as it evolves: its architecture, the technologies practiced, verified observations, and the next experiments.
+**Cisco CML Personal | Enterprise campus, dual-ISP WAN, branch connectivity and perimeter security**
 
+A hands-on enterprise lab focused on **design, configuration and observable network behavior**. The public portfolio highlights **completed and tested scenarios**; full sanitized configurations and additional engineering documentation are also available.
 
-## Topology overview
+## Topology
 
-The lab models an Amsterdam HQ, Rotterdam branch, two independent ISP autonomous systems, and supporting enterprise services.
+![Enterprise campus & WAN topology](topology/Topology.png)
 
-![Cisco CML Enterprise Campus and WAN topology](topology/Topology.png)
+Amsterdam HQ (AS 65010), Rotterdam branch (AS 65020), two simulated providers (AS 65100 / 65200), redundant distribution and edge, Cisco ASA Active/Standby, DMZ and infrastructure services.
 
-*Amsterdam HQ, Rotterdam branch, dual ISP connectivity, ASA perimeter, server infrastructure, and test endpoints. Image and archived device configurations have different snapshot dates.*
+## Verified implementation highlights
 
-## Technologies in the lab
-
-| Area | Design / experiments |
+| Lab scenario | Observed result |
 | --- | --- |
-| Campus switching | VLANs, 802.1Q trunks, LACP EtherChannel |
-| First-hop redundancy | HSRP at HQ; VRRP at the branch |
-| IGP / edge routing | OSPF area 0, iBGP and eBGP |
-| WAN | Dual simulated ISPs and GRE/IPsec experiments |
-| Security | ASA active/standby, inside/outside/DMZ, NAT/PAT, ACLs, PBR |
-| Infrastructure | DHCP, DNS, syslog, TACACS+, NTP, SNMPv3, NMS and backups |
+| **ASA stateful failover** | The pre-existing TCP connection survived FW1 → FW2 role change; HTTP GET over the same session returned **200 OK** |
+| **DMZ static NAT** | Internal HTTP service `172.16.70.10:8080` published and reached at `192.0.2.22:8080` |
+| **HQ source PAT** | VLAN 10 client `10.10.10.138` translated through `192.0.2.20`; **173/173** ICMP replies in the recorded test |
+| **HSRP first-hop redundancy** | DIST1 → DIST2 VLAN 10 gateway switchover, **zero ping loss observed in that test** |
+| **ASA access-control validation** | Five final positive/negative `packet-tracer` scenarios returned expected allow/deny decisions |
 
-## Implementation documentation
+**[View validated project results](docs/ccnp-lab-design-summary-2026-11-09.md)**
 
-- [HQ Switching: LACP, STP, HSRP, OSPF, PBR](docs/hq-switching-implementation.md)
-- [WAN, BGP, OSPF and Branch](docs/wan-branch-implementation.md)
-- [ASA Perimeter and Failover](docs/perimeter-security.md)
-- [Infrastructure Services: DHCP, DNS, TACACS+, Syslog, NMS](docs/infrastructure-services.md)
-- **[9 November: CCNP LAB DESIGN SUMMARY](docs/ccnp-lab-design-summary-2026-11-09.md)**
-- [ASA Stateful TCP Failover](docs/asa-stateful-tcp-failover.md)
-- [IP SLA Stage 1.13 / Object Tracking](docs/ip-sla-object-tracking.md)
-- **[Updated CML configuration export — 9 November 2026](docs/latest-cml-config-snapshot-2026-11-09.md)**
-- [Configuration Source and Fidelity](docs/configuration-source-and-fidelity.md)
-- [Configuration Review Findings](docs/review-findings.md)
-- [CML Inventory](docs/cml-export-inventory.md) and [Progress / Test Status](docs/progress.md)
+These outcomes are from documented CML testing. They are **scenario-specific**, rather than claims of universal availability or end-to-end validation of every configured feature.
 
+## Network implementation and evidence
 
-## Latest reported checkpoints — 9 November 2026
-
-- **ASA stateful TCP HA:** Existing EDGE1 → DMZ HTTP session was preserved when FW2 became Active; HTTP GET on the original connection returned **200 OK**.
-- **DMZ static NAT:** `172.16.70.10` published as `192.0.2.22`, with HTTP on port 8080. HQ/branch PAT uses outside `192.0.2.20`.
-- **Five final ASA packet-tracer checks** produced expected allow/deny decisions, including HQ, guest, branch and outside-to-DMZ policies.
-- **VLAN10 HSRP failover** DIST1 → DIST2: zero observed ping loss in that test.
-- **IP SLA 10 passed** probing `10.255.100.4` (31 successes, zero failures), but **object tracking was not supported** by the IOL-L2 17.18.2 node.
-- **Outstanding:** tracked default route, controlled full ISP/edge failures, and real branch-client Internet connectivity.
-
-These are recovered **conversation test results**, not new tests in this GitHub update. See [full dated checkpoint](docs/ccnp-lab-design-summary-2026-11-09.md).
-
-## Published configuration snapshots
-
-| Folder | Contents |
+| Area | Material |
 | --- | --- |
-| [configs/hq/](configs/hq/) | 6 HQ switches and WAN edge devices |
-| [configs/branch/](configs/branch/) | 3 Rotterdam routers / access devices |
-| [configs/isp/](configs/isp/) | 2 simulated ISP routers |
-| [configs/security/](configs/security/) | 2 ASA firewalls + perimeter switch |
-| [configs/services/](configs/services/) | 6 saved service files for 4 service nodes |
+| **Verification gallery / LinkedIn evidence plan** | [NAT, xlate, conn, QoS, traceroute, OSPF, BGP, ISAKMP, IPsec and HSRP](evidence/README.md) |
+| **HQ campus** | [Switching, trunks, EtherChannel, HSRP and OSPF](docs/hq-switching-implementation.md) |
+| **WAN / branch** | [BGP, OSPF, GRE/IPsec and configured QoS/PBR](docs/wan-branch-implementation.md) |
+| **ASA** | [Stateful TCP failover test details](docs/asa-stateful-tcp-failover.md) |
+| **Sanitized configurations** | [20 original saved node files, organized by device](configs/) |
 
-**20 files from 18 configured CML nodes** are published from the **9 November 2026 export** (28 total nodes, 52 links). All exported network interface stanzas are preserved. Credentials, authentication material and certificate private contents are redacted, so these are **non-deployable historical snapshots**. Ten other CML endpoints had no saved node configuration files in the export.
+The 9 November 2026 CML export contains **28 nodes, 52 links and 20 saved configuration files from 18 nodes**. Interfaces and non-sensitive commands are retained in the public snapshots. Credentials and PKI material are excluded; these files are **not deployable backups**. The original CML YAML is not published.
 
-**The CML YAML itself is not published.** The [topology screenshot](topology/Topology.png) is the visual reference. FW1's export contains corrected `outside`; FW2's file still shows `outisde`. **DIST2's Null0 fallback was added after the uploaded export**, as reported by the lab owner. See [latest export findings](docs/latest-cml-config-snapshot-2026-11-09.md).
-
-## Workflow for future updates
-
-1. Configure and test a new stage in CML.
-2. Record relevant show-command evidence and any observed caveats.
-3. Redact passwords, keys, SNMP authentication/privacy secrets, VPN pre-shared keys and tokens before committing configs.
-4. Update `docs/progress.md` and `CHANGELOG.md`, then commit to GitHub.
+**Evidence policy:** Routing neighbor state, IPsec packet counters, QoS treatment and traceroute screenshots will be added only after their real CLI output is captured. A configured feature is not represented as an operationally verified milestone merely because it appears in a saved configuration.
 
 ## Environment
 
-Cisco CML Personal **2.10.0+build.13** on a Windows 11 Pro host (32 GB RAM).
+Cisco CML Personal 2.10.0+build.13 · Windows 11 Pro host · 32 GB RAM.
 
-## Related standalone practice labs
+## Related practice labs
 
 - [BGP CML Labs](https://github.com/enisalushi/ccnp-bgp-cml-labs)
-- [QoS Enterprise / SP Lab](https://github.com/enisalushi/cisco-qos-enterprise-sp-lab)
+- [QoS Enterprise / Service Provider Lab](https://github.com/enisalushi/cisco-qos-enterprise-sp-lab)
 - [OSPF Multi-Area Lab](https://github.com/enisalushi/ospf-multi-area-lab)
 
-*Educational and self-study use only.*
+*Technical learning portfolio. Lab results and documentation represent the tests described, not a production deployment.*
