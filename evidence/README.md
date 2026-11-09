@@ -1,86 +1,128 @@
-# Verification Evidence Gallery — Screenshot Capture Guide
+# CCNP Enterprise Campus — CLI Evidence Capture Plan
 
-This folder will hold **real CML CLI screenshots** for the [validated project showcase](../docs/ccnp-lab-design-summary-2026-11-09.md) and a reusable **LinkedIn project carousel**.
+Run these commands in **Cisco CML → select the device → Console**, from **Privileged EXEC** (`enable` if needed). Take a real screenshot with the **hostname, command and decisive output visible**, then upload the screenshots in our chat for review. No CML YAML or raw secrets should be committed.
 
-**Current assets:** [Actual CML topology](../topology/Topology.png) is already available. Command-output screenshots below are **capture targets**, not uploaded proof. Do not label a protocol as verified until its actual operational output is inspected.
+## Batch 1 — Campus and routing
 
-## Recommended screenshots
-
-| Priority | Image / suggested file name | Device and evidence | What the image must prove |
-| --- | --- | --- | --- |
-| 1 | `security/01-static-nat.png` | ASA FW1: `show nat detail` | Static NAT for DMZ `172.16.70.10` → `192.0.2.22`, with correct interface direction |
-| 2 | `security/02-dynamic-xlate.png` | Active ASA: `show xlate` after HQ VLAN10 traffic | Actual dynamic PAT mapping from `10.10.10.138` to outside `192.0.2.20` |
-| 3 | `security/03-conn-and-failover.png` | Active ASA before/after: `show conn` and `show failover` | The same established TCP flow is present after FW2 becomes Active; pair with HTTP 200 OK evidence |
-| 4 | `routing/04-ospf-full.png` | HQ EDGE1/DIST1: `show ip ospf neighbor` | Correct neighbors reach **FULL** state; record router IDs/interfaces |
-| 5 | `routing/05-bgp-established.png` | HQ EDGE1 or EDGE2: `show bgp ipv4 unicast summary` | Expected iBGP/eBGP sessions are **Established**, with received prefixes rather than idle/active state |
-| 6 | `vpn/06-isakmp-sa.png` | HQ EDGE1/branch R1: `show crypto isakmp sa` | IKEv1 security association established (commonly `QM_IDLE` for working IKEv1 main-mode peers) |
-| 7 | `vpn/07-ipsec-sa.png` | Same tunnel pair: `show crypto ipsec sa` | Nonzero, **increasing encapsulation AND decapsulation counters** during generated GRE traffic |
-| 8 | `qos/08-wan-policy.png` | HQ EDGE1 `Ethernet0/2`: `show policy-map interface Ethernet0/2` | 1 Mbps WAN shaper and policy class counters under actual traffic |
-| 9 | `qos/09-gre-policy.png` | HQ EDGE1 `Tunnel10`: `show policy-map interface Tunnel10` | Tunnel classes matched and counters increasing when voice/video/critical/guest traffic is generated |
-| 10 | `routing/10-traceroute.png` | Client or router: destination-specific `traceroute` | Observed forwarding path for one documented source/destination pair—not standalone proof of IPsec |
-| 11 | `redundancy/11-hsrp-before-after.png` | DIST1 and DIST2: `show standby brief` before/after | VLAN 10 HSRP role swap, with separate continuous-ping loss summary |
-
-The exact platform command may vary by image. These are **evidence candidates**; configured policies alone do not show that classification, tunnels or routing adjacencies work.
-
-## Commands for screenshot capture
-
-**ASA — Privileged EXEC mode:**
+**AMS-HQ-ACC1 — EtherChannel and 802.1Q trunks**
 
 ```cisco
-show nat detail
-show xlate
-show conn
-show failover
-show access-list
+show etherchannel summary
+show interfaces trunk
 ```
 
-**IOS / IOS-XE routers and switches — Privileged EXEC mode:**
+Look for correctly bundled Po11/Po12 member links, trunk VLANs and forwarding status. Save as `campus/acc1-etherchannel.png`.
+
+**AMS-HQ-DIST1 and AMS-HQ-DIST2 — First-hop redundancy and OSPF**
+
+Run on **both** devices:
+
+```cisco
+show standby brief
+show ip ospf neighbor
+```
+
+Document the Active/Standby gateway roles and OSPF FULL adjacencies. Two images: `campus/dist1-hsrp.png`, `campus/dist2-hsrp.png`.
+
+**AMS-HQ-EDGE1 — OSPF, BGP and ISP-A track**
 
 ```cisco
 show ip ospf neighbor
 show bgp ipv4 unicast summary
-show ip route
-show crypto isakmp sa
-show crypto ipsec sa
-show policy-map interface Ethernet0/2
-show policy-map interface Tunnel10
-show standby brief
+show track 10
+show ip route 0.0.0.0
 ```
 
-**Sample IOS-XE path test — Privileged EXEC mode (replace the destination with the endpoint actually tested):**
+OSPF neighbor FULL and BGP State/PfxRcd numeric (rather than Idle/Active) are meaningful. Names: `routing/edge1-ospf.png`, `routing/edge1-bgp.png`, `routing/edge1-track.png`.
+
+**AMS-HQ-EDGE2 — BGP and ISP-B track**
 
 ```cisco
-traceroute 10.20.120.100
+show bgp ipv4 unicast summary
+show track 20
+show ip route 0.0.0.0
 ```
 
-Do not run interface-specific commands on unrelated devices; `Ethernet0/2` and `Tunnel10` here refer to **HQ EDGE1** in the saved CML export.
+Captures the alternate ISP and routing state. Name: `routing/edge2-bgp-track.png`.
 
-## Screenshot quality standards
+## Batch 2 — Branch, GRE/IPsec and forwarding path
 
-1. Keep **hostname, command and decisive output** visible. Crop unrelated console history and browser chrome.
-2. For each result, capture **source device, destination or peer, expected state and actual state**. When comparing counters, take before/after output under meaningful traffic.
-3. Never expose local account passwords, TACACS shared keys, SNMP auth/privacy strings, IKE/IPsec PSKs, certificates, user tokens or real organization identifiers.
-4. Use consistent naming and crisp 16:9 crops when feasible. Avoid overcrowding; combine closely related screenshots into a labeled comparison if necessary.
-5. Show real output only. Do not replace the command's state or packet counters with synthetic values.
+**RTM-BR-R1 — Tunnel10, OSPF and IKE/IPsec**
 
-## LinkedIn carousel recommendation
+```cisco
+show ip ospf neighbor
+show crypto isakmp sa
+show crypto ipsec sa
+show ip route 10.10.70.10
+traceroute 10.10.70.10
+```
 
-Make one **7–9 slide technical story**, with a simple structure:
+IKEv1 `QM_IDLE` (when applicable) establishes a negotiated SA; real IPsec forwarding requires **encapsulation and decapsulation counters increasing** during generated tunnel traffic. Traceroute documents only the observed hop path, not encryption. Names: `vpn/br-r1-isakmp.png`, `vpn/br-r1-ipsec.png`, `routing/br-r1-traceroute.png`.
 
-| Slide | Visual | Professional takeaway |
-| --- | --- | --- |
-| 1 | [CML topology](../topology/Topology.png) | Scope: HQ, branch, dual ISPs, ASA HA |
-| 2 | OSPF FULL + BGP Established (after proof collected) | Control-plane connectivity and route exchange |
-| 3 | IKEv1 / IPsec states and counters (after proof collected) | Encrypted branch transport with real packet movement |
-| 4 | Traceroute (after proof collected) | Demonstrated forwarding path |
-| 5 | QoS shaping and class counters (after proof collected) | Classification and treatment under load |
-| 6 | ASA NAT / xlate | Address translation demonstrated with a real flow |
-| 7 | ASA conn + FW1→FW2 stateful failover + HTTP 200 | Established-session continuity |
-| 8 | HSRP before/after | Gateway redundancy and observed loss result |
-| 9 | Concise architecture takeaways and GitHub link | Traceable, reproducible lab evidence |
+**RTM-BR-R2 — Tunnel20 and VRRP**
 
-**Selection rule:** Publish only slides with genuine screenshots that confirm the claim. It is better to have **five proven slides than nine screenshots of merely configured features**.
+```cisco
+show crypto isakmp sa
+show crypto ipsec sa
+show vrrp brief
+```
 
-## Linking screenshots into the project
+Second tunnel and branch default-gateway redundancy. Names: `vpn/br-r2-ipsec.png`, `campus/br-r2-vrrp.png`.
 
-Once the screenshots exist, upload them under the paths above. This folder's README can then display them inline, with one **Objective → Command → Observed result → Network significance** caption for each. The completed project summary should link only to validated screenshot sections, not to empty placeholders.
+## Batch 3 — QoS
+
+**AMS-HQ-EDGE1 — ISP-A shaping and GRE QoS**
+
+```cisco
+show policy-map interface Ethernet0/2
+show policy-map interface Tunnel10
+```
+
+Saved config attaches WAN shaper to `Ethernet0/2` and GRE QoS to `Tunnel10`. Capture policy names, shaping rate, traffic class counters and drops if present. Counter increases under traffic provide stronger evidence than the policy alone. Names: `qos/edge1-isp-shaping.png`, `qos/edge1-gre-qos.png`.
+
+**AMS-HQ-EDGE2 — ISP-B and GRE QoS**
+
+```cisco
+show policy-map interface Ethernet0/2
+show policy-map interface Tunnel20
+```
+
+Second provider, different edge and tunnel. Name: `qos/edge2-isp-gre.png`.
+
+## Batch 4 — ASA NAT, connection state and application traffic
+
+**The ASA that is CURRENTLY Active (FW1 or FW2)**
+
+```cisco
+show failover
+show nat detail
+show xlate
+show conn
+show access-list
+```
+
+First confirm which chassis is Active with `show failover`. `show nat detail` demonstrates configured DMZ static NAT. Generate real HQ VLAN10 traffic to populate dynamic PAT `show xlate`; initiate HTTP to the published DMZ service for `show conn`. Names: `security/asa-failover.png`, `security/asa-nat.png`, `security/asa-xlate.png`, `security/asa-conn.png`.
+
+**AMS-HQ-EDGE1 — Actual DMZ HTTP response**
+
+```cisco
+telnet 192.0.2.22 8080
+```
+
+Type the following into the established Telnet connection, then send one blank line:
+
+```text
+GET / HTTP/1.0
+```
+
+Capture the real HTTP response and verify it correlates to `show conn`. Name: `security/dmz-http-response.png`.
+
+## Evidence quality and publication
+
+- **GitHub:** Publish every accepted and captioned screenshot in `evidence/campus/`, `evidence/routing/`, `evidence/vpn/`, `evidence/qos/` or `evidence/security/`. Caption each image with **objective, command, actual observed result and packet behavior**.
+- **LinkedIn:** Select approximately **6–8 strongest visual proofs** from multiple nodes: topology; OSPF/BGP; GRE/IKE/IPsec; QoS; NAT/xlate; ASA stateful TCP failover; HSRP. Use fewer if protocol checks are not operational.
+- Do **not** post router passwords, SNMP secrets, TACACS keys, VPN keys, tokens or private certificates. Do not alter command output or invent packet counters.
+- If a command is unsupported or returns unexpected status, **send the output as-is**. It becomes troubleshooting material, not a completed-implementation claim.
+- Screenshots are not yet present here; this is a command-and-capture plan. [View completed implementation summary](../docs/ccnp-lab-design-summary-2026-11-09.md).
+
+**Start with Batch 1 (ACC1, DIST1, DIST2 and EDGE1).** Once those screenshots are reviewed, continue with the branch/VPN, QoS and ASA batches.
