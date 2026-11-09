@@ -2,7 +2,6 @@
 
 A **work-in-progress enterprise network design** built and tested in Cisco Modeling Labs (CML) Personal. This repository documents the lab as it evolves: its architecture, the technologies practiced, verified observations, and the next experiments.
 
-**Latest reported lab checkpoint:** 9 November 2026. **Saved configuration export:** 9 November 2026 (sanitized, not independently retested). This is a learning lab, not a production design or a claim that every feature is fully tested.
 
 ## Topology overview
 
