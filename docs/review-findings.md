@@ -1,5 +1,19 @@
 # Configuration review findings
 
+## Current saved-export review — 9 November 2026
+
+- All **20 saved node files** have been updated from the new CML export (28 nodes, 52 links). [Read comparison](latest-cml-config-snapshot-2026-11-09.md).
+- **DIST2 Null0:** absent from uploaded saved configuration; user confirms it was **added afterward**. The exact command and AD require a newer config capture. This is no longer simply an outstanding configuration task.
+- **ASA interfaces:** FW1 now saves `outside`, while FW2 still saves `outisde`. Check the actual active/standby running state.
+- **Distribution VLAN 10 PBR:** former SVI `ip policy` attachment is absent from the newer saved configs; branch and edge PBR remain present.
+- **Enhanced Object Tracking:** present for ISP defaults on EDGE1/EDGE2, not proven available for the ASA inside default on DIST1/DIST2.
+- **Multicast:** saved PIM statements alone do not establish expected `(S,G)`; further TX/RX validation is pending.
+
+### Historical 2 November findings
+
+The findings below describe an **older export**, not necessarily the newer CML state.
+
+
 Snapshot audited: **2026-11-02 CML export**. The **9 November** conversation includes newer verified tests; see [dated checkpoint](ccnp-lab-design-summary-2026-11-09.md). Findings from the older export may have since changed; no newer complete configuration export was available. No changes were pushed to CML devices.
 
 | Item | Observation | Suggested verification |

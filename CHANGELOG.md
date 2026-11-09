@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-11-09 — New CML configurations and DIST2 follow-up
+
+- Refreshed all **20 sanitized saved configuration files** from the uploaded 9 November YAML (28 nodes, 52 links).
+- Preserved all saved interfaces and non-sensitive commands, including edge IP SLA/track, QoS shaping/marking, branch/edge PBR and ASA FW1 `outside` correction.
+- Documented that the **DIST2 Null0 default was added after the export**, as reported by the lab owner. The published DIST2 saved config remains unchanged until a newer export is available.
+- Flagged FW2's saved `outisde` nameif and absence of former distribution SVI PBR attachments.
+- Kept CML YAML and authentication/certificate payloads out of GitHub.
+
 ## 2026-11-09 — Topology screenshot replaced and source fidelity audited
 
 - Replaced `topology/Topology.png` with the user's newer full-resolution (1545 × 1093) CML screenshot.

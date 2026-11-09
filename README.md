@@ -2,7 +2,7 @@
 
 A **work-in-progress enterprise network design** built and tested in Cisco Modeling Labs (CML) Personal. This repository documents the lab as it evolves: its architecture, the technologies practiced, verified observations, and the next experiments.
 
-**Latest reported lab checkpoint:** 9 November 2026. **Saved configuration export:** 2 November 2026 (historical, sanitized). This is a learning lab, not a production design or a claim that every feature is fully tested.
+**Latest reported lab checkpoint:** 9 November 2026. **Saved configuration export:** 9 November 2026 (sanitized, not independently retested). This is a learning lab, not a production design or a claim that every feature is fully tested.
 
 ## Topology overview
 
@@ -32,7 +32,8 @@ The lab models an Amsterdam HQ, Rotterdam branch, two independent ISP autonomous
 - **[9 November: CCNP LAB DESIGN SUMMARY](docs/ccnp-lab-design-summary-2026-11-09.md)**
 - [ASA Stateful TCP Failover](docs/asa-stateful-tcp-failover.md)
 - [IP SLA Stage 1.13 / Object Tracking](docs/ip-sla-object-tracking.md)
-- [Configuration Source and Fidelity (original CML files)](docs/configuration-source-and-fidelity.md)
+- **[Updated CML configuration export — 9 November 2026](docs/latest-cml-config-snapshot-2026-11-09.md)**
+- [Configuration Source and Fidelity](docs/configuration-source-and-fidelity.md)
 - [Configuration Review Findings](docs/review-findings.md)
 - [CML Inventory](docs/cml-export-inventory.md) and [Progress / Test Status](docs/progress.md)
 
@@ -58,9 +59,9 @@ These are recovered **conversation test results**, not new tests in this GitHub 
 | [configs/security/](configs/security/) | 2 ASA firewalls + perimeter switch |
 | [configs/services/](configs/services/) | 6 saved service files for 4 service nodes |
 
-**20 files from 18 configured CML nodes** are published. All exported network interface stanzas are preserved. Credentials, authentication material and certificate private contents are redacted, so these are **non-deployable historical snapshots**. Ten other CML endpoints had no saved node configuration files in the export.
+**20 files from 18 configured CML nodes** are published from the **9 November 2026 export** (28 total nodes, 52 links). All exported network interface stanzas are preserved. Credentials, authentication material and certificate private contents are redacted, so these are **non-deployable historical snapshots**. Ten other CML endpoints had no saved node configuration files in the export.
 
-**The CML YAML itself is not published.** The real [topology screenshot](topology/Topology.png) is the visual reference. The exported ASA configurations still show the original `outisde` nameif spelling; the owner reports correcting it in CML after that export.
+**The CML YAML itself is not published.** The [topology screenshot](topology/Topology.png) is the visual reference. FW1's export contains corrected `outside`; FW2's file still shows `outisde`. **DIST2's Null0 fallback was added after the uploaded export**, as reported by the lab owner. See [latest export findings](docs/latest-cml-config-snapshot-2026-11-09.md).
 
 ## Workflow for future updates
 
