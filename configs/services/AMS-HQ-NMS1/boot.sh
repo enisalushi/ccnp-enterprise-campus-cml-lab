@@ -1,4 +1,3 @@
-# Sanitized saved CML startup script (2026-11-02). Test-lab only.
 ip link set dev eth0 up
 ip address flush dev eth0
 ip address add 10.10.70.70/24 dev eth0
