@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-11-09 — Operational evidence gallery published
+
+- Published **29 original CML command screenshots** in six categories: campus, routing, VPN, QoS, security, enterprise services.
+- Added verified NTP synchronization on EDGE1 and branch-to-HQ SSH / TACACS+ EXEC authorization evidence.
+- Organized every capture with the relevant command, observed result and technical limitations.
+- Updated README and project showcase with evidence links and a concise LinkedIn shortlist.
+- Kept output and image pixels unchanged; did not publish passwords or CML YAML.
+
 ## 2026-11-09 — New CML configurations and DIST2 follow-up
 
 - Refreshed all **20 sanitized saved configuration files** from the uploaded 9 November YAML (28 nodes, 52 links).

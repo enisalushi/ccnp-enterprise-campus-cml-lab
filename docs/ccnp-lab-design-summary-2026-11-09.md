@@ -77,11 +77,27 @@ Five final ASA `packet-tracer` scenarios matched the expected outcomes:
 
 **Demonstrated:** The configured ASA policy logic behaved as expected in these **packet-tracer simulations**. The branch policy simulation is not presented as an independent live branch-client Internet test.
 
+### 6. NTP — Synchronized Enterprise Time
+
+**Objective:** Verify that the HQ edge router receives valid NTP synchronization from the lab's internal time source.
+
+**Observed result:** EDGE1 selected peer `1.1.1.1`, showed a synchronized stratum-4 clock, NTP time source and approximately -1.0785 ms offset.
+
+**Demonstrated:** Internal time synchronization for this node. [View NTP evidence](../evidence/services/README.md#ntp--edge1-synchronized-to-the-lab-time-source).
+
+### 7. SSH and TACACS+ — Centralized Administrative Access
+
+**Objective:** Validate secure management access from Rotterdam branch to Amsterdam distribution and centralized EXEC authorization.
+
+**Observed result:** BR-R2 successfully opened SSH to DIST1 at `10.10.70.2`; the TACACS+ authorization log accepted user `tacadmin` with `priv-lvl=15` for source `1.1.1.1`.
+
+**Demonstrated:** Authenticated remote EXEC access and a successful TACACS+ EXEC authorization decision. This does **not** by itself demonstrate command-by-command accounting. [View SSH and TACACS+ screenshots](../evidence/services/README.md#ssh--branch-administrator-reaches-hq-distribution).
+
 ## Verification gallery
 
 The [evidence capture and screenshot guide](../evidence/README.md) defines the exact command outputs and image captions for **NAT, xlate, conn, HSRP, traceroute, OSPF, BGP, IKEv1/IPsec and QoS**.
 
-Only the topology image is published so far. Screenshots of CLI outputs will be added after capture; **no terminal output or proof images are fabricated**. Each photo will demonstrate a specific observed state, and protocol topics will be added to this completed-project showcase only after their outputs confirm the expected behavior.
+**29 original CLI screenshots are now published**, with per-device captions under the [evidence gallery](../evidence/README.md). The captures show working LACP, HSRP/VRRP roles, OSPF/BGP adjacencies, IKE/IPsec SAs, PAT and application traffic, WAN shaping, NTP and TACACS+ authorization. **QoS priority-class matches were zero**, so classification under load is not claimed as completed. All screenshots are original; no terminal output has been invented.
 
 ## Implementation sources
 

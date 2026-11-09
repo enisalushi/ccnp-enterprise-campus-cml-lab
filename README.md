@@ -19,8 +19,10 @@ Amsterdam HQ (AS 65010), Rotterdam branch (AS 65020), two simulated providers (A
 | **HQ source PAT** | VLAN 10 client `10.10.10.138` translated through `192.0.2.20`; **173/173** ICMP replies in the recorded test |
 | **HSRP first-hop redundancy** | DIST1 → DIST2 VLAN 10 gateway switchover, **zero ping loss observed in that test** |
 | **ASA access-control validation** | Five final positive/negative `packet-tracer` scenarios returned expected allow/deny decisions |
+| **Enterprise NTP** | EDGE1 synchronized to lab time source `1.1.1.1`, stratum 4; clock source NTP |
+| **SSH + TACACS+ AAA** | BR-R2 reached DIST1 over SSH; TACACS+ EXEC authorization accepted, privilege level 15 |
 
-**[View validated project results](docs/ccnp-lab-design-summary-2026-11-09.md)**
+**[View validated project results](docs/ccnp-lab-design-summary-2026-11-09.md)** · **[29 real CLI evidence screenshots](evidence/README.md)**
 
 These outcomes are from documented CML testing. They are **scenario-specific**, rather than claims of universal availability or end-to-end validation of every configured feature.
 
@@ -28,7 +30,7 @@ These outcomes are from documented CML testing. They are **scenario-specific**, 
 
 | Area | Material |
 | --- | --- |
-| **Verification gallery / LinkedIn evidence plan** | [NAT, xlate, conn, QoS, traceroute, OSPF, BGP, ISAKMP, IPsec and HSRP](evidence/README.md) |
+| **Verified screenshot gallery / LinkedIn shortlist** | [29 real screenshots: routing, VPN, QoS, ASA, campus, NTP and TACACS+](evidence/README.md) |
 | **HQ campus** | [Switching, trunks, EtherChannel, HSRP and OSPF](docs/hq-switching-implementation.md) |
 | **WAN / branch** | [BGP, OSPF, GRE/IPsec and configured QoS/PBR](docs/wan-branch-implementation.md) |
 | **ASA** | [Stateful TCP failover test details](docs/asa-stateful-tcp-failover.md) |
@@ -36,7 +38,7 @@ These outcomes are from documented CML testing. They are **scenario-specific**, 
 
 The 9 November 2026 CML export contains **28 nodes, 52 links and 20 saved configuration files from 18 nodes**. Interfaces and non-sensitive commands are retained in the public snapshots. Credentials and PKI material are excluded; these files are **not deployable backups**. The original CML YAML is not published.
 
-**Evidence policy:** Routing neighbor state, IPsec packet counters, QoS treatment and traceroute screenshots will be added only after their real CLI output is captured. A configured feature is not represented as an operationally verified milestone merely because it appears in a saved configuration.
+**Evidence policy:** [29 original command-output screenshots](evidence/README.md) are available, with technical annotations and explicit test limits. A configured feature is not represented as operationally verified merely because it appears in saved configuration.
 
 ## Environment
 
