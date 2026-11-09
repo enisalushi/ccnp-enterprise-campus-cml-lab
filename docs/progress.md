@@ -1,42 +1,34 @@
 # Progress and validation log
 
-## Snapshot — 2026-11-02
+## 9 November 2026 — latest CCNP LAB DESIGN SUMMARY checkpoint
 
-The CML export contains **28 nodes**, **51 links**, and **20 saved configuration files across 18 nodes**. Refer to the [export inventory](cml-export-inventory.md). This exported configuration snapshot is not a live operational verification.
+Detailed results: [lab summary](ccnp-lab-design-summary-2026-11-09.md), [ASA stateful TCP](asa-stateful-tcp-failover.md), [IP SLA / tracking](ip-sla-object-tracking.md).
 
+| Milestone | Reported observation | Status |
+|---|---|---|
+| ASA Active/Standby synchronization | FW1/FW2 synchronized | Passed |
+| Stateful TCP failover | Existing session survived FW1→FW2; HTTP GET returned 200 OK on original connection | Passed |
+| DMZ static NAT and real HTTP | 172.16.70.10:8080 → 192.0.2.22:8080 | Passed |
+| ASA security policy | Five final packet-tracer ALLOW/DROP checks matched expectations | Passed |
+| Dynamic PAT | HQ/branch NAT configured; HQ VLAN10 prior actual ping traffic passed | Passed in tested scope |
+| VLAN10 HSRP switchover | DIST1→DIST2 with zero observed ICMP loss in that run | Passed in tested scope |
+| Default route & firewall breakout | DIST1/DIST2 primary default via ASA AD1; Null0 default AD100, EDGE/branch PBR attachments checked | Configured |
+| IP SLA 10 | To ASA inside 10.255.100.4 from Vlan80; 31 successes / 0 failures / 1ms RTT | Passed |
+| Tracked default route | `track` unsupported by IOL-L2 IOS-XE 17.18.2 | Blocked |
+| Branch live Internet access | ASA packet-tracer allowed simulated branch flow; actual branch end-to-end flow not yet tested | Pending |
+| Full ISP/edge outages | Controlled end-to-end failure tests not done | Pending |
 
-### Included in the evolving lab
+These are **reported results from the prior chat**, not retests against the deployed network.
 
-- Amsterdam HQ campus and Rotterdam branch with two simulated ISP domains.
-- VLANs, trunks, LACP EtherChannel, HSRP and VRRP exercises.
-- OSPF area 0, internal/external BGP, GRE/IPsec exercises.
-- ASA pair, DMZ/perimeter connectivity, infrastructure monitoring and services.
+### Outstanding
+1. Export new sanitized running configs capturing changes made **after 2 November**, especially the ASA `outside` correction and any later PBR/NAT/ACL work.
+2. Confirm whether old DIST1 PBR ACL mismatch and DIST2 policy gap are now resolved.
+3. Test route tracking with a supported image; verify fail-closed behavior.
+4. Run live branch-client Internet tests and controlled ISP/edge outage tests.
+5. Publish timestamps and show-command evidence for all new stages.
 
-### Published artifacts
+---
 
-- **All 20 saved configuration files from all 18 configured nodes** are now published as sanitized snapshots (HQ, branch, ISP, perimeter, and services). Full network-interface stanzas are preserved.
-- [HQ implementation](hq-switching-implementation.md), [WAN/branch](wan-branch-implementation.md), [perimeter](perimeter-security.md), [services](infrastructure-services.md), and [review findings](review-findings.md).
-- DIST1 saved PBR route-map ACL naming mismatch and DIST1-only PBR application noted for follow-up.
-- ASA `outside` interface spelling corrected by the lab owner after the uploaded export; current running-config evidence not yet attached.
+## 2 November 2026 — exported configuration baseline
 
-### Specific observed results
-
-| Area | Observation | Status |
-| --- | --- | --- |
-| ASA HA | FW1 Active; FW2 Standby Ready | Observed |
-| VLAN 10 PAT | 10.10.10.138 to 8.8.8.8 succeeded; PAT to 192.0.2.20 | Passed in earlier test |
-| ASA ACL test | Temporary `ACL-INSIDE-TEST` denied ICMP; packet-tracer DROP at access-list phase | Passed — expected deny |
-| All-VLAN Internet connectivity | No complete updated evidence in this snapshot | Pending |
-| Traffic continuity across ASA HA failover | No current packet-loss/convergence measurement | Pending |
-
-**Important:** The last observed ASA inside ACL includes an intentional ICMP deny for the test flow. The successful PAT test was earlier, not simultaneous with the deny configuration.
-
-### Next milestones
-
-1. Restore or replace the temporary test ACL as intended, then validate the resulting forwarding path.
-2. Re-export current running configurations when possible to capture any changes made after 2026-11-02, particularly the ASA `outside` nameif fix.
-3. Verify Internet breakout from the HQ and branch VLANs.
-4. Measure ASA failover convergence and packet loss during a controlled test.
-5. Add changes after each new lab stage with dated results.
-
-This is a lab journal, not a verified production blueprint.
+Cisco CML export: **28 nodes, 51 links, 20 saved configuration files across 18 nodes**; published under [configs](../configs/). These are sanitized historical snapshots, not deployable backups. The old ASA export still spelled `outisde`; the owner corrected `outside` later. The original YAML remains private.

@@ -1,6 +1,8 @@
 # Perimeter switching and ASA failover
 
-**Source:** Cisco CML snapshot from 2026-11-02 plus previously observed testing. Saved configs are historical and have not been re-exported after the reported ASA outside-name correction.
+**Source:** Cisco CML snapshot from 2026-11-02 plus previously observed testing.
+
+**Newer checkpoint (9 November):** A real, pre-existing DMZ HTTP TCP connection survived ASA failover, and five final ASA packet-tracer cases passed. See [full checkpoint](ccnp-lab-design-summary-2026-11-09.md) and [stateful TCP test](asa-stateful-tcp-failover.md). The saved configs linked below are still the older 2 November export. Saved configs are historical and have not been re-exported after the reported ASA outside-name correction.
 
 ## Published configurations
 

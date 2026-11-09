@@ -1,6 +1,6 @@
 # Configuration review findings
 
-Snapshot audited: **2026-11-02 CML export**. These are configuration observations, **not live failures**. No changes were pushed to CML devices.
+Snapshot audited: **2026-11-02 CML export**. The **9 November** conversation includes newer verified tests; see [dated checkpoint](ccnp-lab-design-summary-2026-11-09.md). Findings from the older export may have since changed; no newer complete configuration export was available. No changes were pushed to CML devices.
 
 | Item | Observation | Suggested verification |
 | --- | --- | --- |
@@ -11,7 +11,9 @@ Snapshot audited: **2026-11-02 CML export**. These are configuration observation
 | ASA ACL state | Prior intentional ICMP denial was observed after a successful PAT connectivity test | Run fresh policy review and packet-tracer to document current behavior |
 | TACACS+ | Published config deliberately excludes users/keys | Use private, working secrets for actual lab deployment; verify AAA |
 | DNS/DHCP boot | Archived script uses world-writable `chmod 777 /var/ftpd` | Restrict permissions outside isolated lab |
-| Operational status | Saved CML configs do not prove BGP/OSPF neighbours, IPsec SAs, HA convergence or application success | Attach dated `show` outputs and end-to-end tests |
+| IP SLA / tracking | SLA 10 worked, but `track` was unsupported on IOL-L2 IOS-XE 17.18.2 | Implement object tracking on supported node and verify route withdrawal |
+| Branch live access | Branch VLAN120 packet-tracer ALLOW passed; real branch-client Internet connectivity not yet demonstrated | Perform end-to-end client test |
+| Operational status | Saved CML configs do not prove every BGP/OSPF or IPsec state; newer ASA stateful TCP and VLAN10 HSRP tests did pass | Attach dated show outputs, packet tests, and state tables |
 
 ## Baseline evidence still required
 
@@ -25,6 +27,7 @@ show vrrp brief
 show ip ospf neighbor
 show bgp ipv4 unicast summary
 show ip route
+! Only on images with object tracking support
 show track
 ```
 

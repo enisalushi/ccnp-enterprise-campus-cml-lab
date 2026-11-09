@@ -1,5 +1,7 @@
 # ASA HA, PBR and traffic-flow experiment
 
+**Later 9 November findings:** ASA stateful TCP failover and five final security-policy packet-tracer checks passed. Read [full lab summary](ccnp-lab-design-summary-2026-11-09.md) and [TCP failover experiment](asa-stateful-tcp-failover.md). The older tests below document earlier stages and must not be mistaken for the latest ACL state.
+
 ## ASA high availability
 
 Last observed states:

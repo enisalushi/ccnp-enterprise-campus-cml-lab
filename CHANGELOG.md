@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-11-09 — CCNP LAB DESIGN SUMMARY published
+
+- Documented ASA stateful TCP failover: original TCP connection retained and HTTP GET returned 200 OK after role transition.
+- Added DMZ static NAT, five ASA policy checks, VLAN10 HSRP failover, and fail-closed static/Null0 default routing design.
+- Captured IP SLA 10 success and object tracking limitation in IOL-L2 IOS-XE 17.18.2.
+- Distinguished completed simulations and live tests from pending branch access and full upstream failures.
+- Left saved 2 November configurations and excluded CML YAML unchanged.
+
 ## 2026-11-02 — Initial GitHub publication
 
 - Published the architecture and simplified logical topology for the evolving CCNP Enterprise campus/WAN lab.

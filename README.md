@@ -2,7 +2,7 @@
 
 A **work-in-progress enterprise network design** built and tested in Cisco Modeling Labs (CML) Personal. This repository documents the lab as it evolves: its architecture, the technologies practiced, verified observations, and the next experiments.
 
-**Latest documentation snapshot:** 2 November 2026. This is a learning lab, not a production design or a claim that every feature is fully tested.
+**Latest reported lab checkpoint:** 9 November 2026. **Saved configuration export:** 2 November 2026 (historical, sanitized). This is a learning lab, not a production design or a claim that every feature is fully tested.
 
 ## Topology overview
 
@@ -29,17 +29,23 @@ The lab models an Amsterdam HQ, Rotterdam branch, two independent ISP autonomous
 - [WAN, BGP, OSPF and Branch](docs/wan-branch-implementation.md)
 - [ASA Perimeter and Failover](docs/perimeter-security.md)
 - [Infrastructure Services: DHCP, DNS, TACACS+, Syslog, NMS](docs/infrastructure-services.md)
+- **[9 November: CCNP LAB DESIGN SUMMARY](docs/ccnp-lab-design-summary-2026-11-09.md)**
+- [ASA Stateful TCP Failover](docs/asa-stateful-tcp-failover.md)
+- [IP SLA Stage 1.13 / Object Tracking](docs/ip-sla-object-tracking.md)
 - [Configuration Review Findings](docs/review-findings.md)
 - [CML Inventory](docs/cml-export-inventory.md) and [Progress / Test Status](docs/progress.md)
 
 
-## Current verified checkpoints
+## Latest reported checkpoints — 9 November 2026
 
-- ASA failover status observed as **AMS-HQ-FW1 Active / AMS-HQ-FW2 Standby Ready**.
-- A prior VLAN 10 test client (`10.10.10.138`) reached `8.8.8.8` through ASA PAT, translated to `192.0.2.20`.
-- A **later, intentionally restrictive ASA ACL test** denied that ICMP flow; `packet-tracer` returned the expected DROP at the access-list phase. This is not proof that Internet access is currently passing.
+- **ASA stateful TCP HA:** Existing EDGE1 → DMZ HTTP session was preserved when FW2 became Active; HTTP GET on the original connection returned **200 OK**.
+- **DMZ static NAT:** `172.16.70.10` published as `192.0.2.22`, with HTTP on port 8080. HQ/branch PAT uses outside `192.0.2.20`.
+- **Five final ASA packet-tracer checks** produced expected allow/deny decisions, including HQ, guest, branch and outside-to-DMZ policies.
+- **VLAN10 HSRP failover** DIST1 → DIST2: zero observed ping loss in that test.
+- **IP SLA 10 passed** probing `10.255.100.4` (31 successes, zero failures), but **object tracking was not supported** by the IOL-L2 17.18.2 node.
+- **Outstanding:** tracked default route, controlled full ISP/edge failures, and real branch-client Internet connectivity.
 
-Other features are documented as lab design/exercises until their latest running state and verification are captured. See [progress](docs/progress.md) for outstanding testing.
+These are recovered **conversation test results**, not new tests in this GitHub update. See [full dated checkpoint](docs/ccnp-lab-design-summary-2026-11-09.md).
 
 ## Published configuration snapshots
 
