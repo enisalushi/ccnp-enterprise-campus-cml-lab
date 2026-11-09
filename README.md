@@ -10,7 +10,7 @@ The lab models an Amsterdam HQ, Rotterdam branch, two independent ISP autonomous
 
 ![Cisco CML Enterprise Campus and WAN topology](topology/Topology.png)
 
-*Updated CML topology screenshot — 9 November 2026: Amsterdam HQ, Rotterdam branch, dual ISP connectivity, ASA perimeter, server infrastructure, and test endpoints. Image and archived device configurations have different snapshot dates.*
+*Amsterdam HQ, Rotterdam branch, dual ISP connectivity, ASA perimeter, server infrastructure, and test endpoints. Image and archived device configurations have different snapshot dates.*
 
 ## Technologies in the lab
 
