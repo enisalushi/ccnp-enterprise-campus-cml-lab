@@ -1,8 +1,8 @@
 # Stage 1 — HQ campus switching and routing
 
-**Source:** Saved Cisco CML configuration export from 2 November 2026 (not live operational outputs).
+**Source note:** Switching design first documented against the **2 November CML export**. The linked device configuration files were **refreshed from the 9 November export**. Historical findings below are explicitly dated and are not claims about the latest saved state.
 
-This stage provides **full substantive sanitized configurations from the saved 2 November 2026 CML export**. All exported interface stanzas, including unused ports, are included (ACC1 19, ACC2 19, DIST1 36, DIST2 32). Credential-bearing lines are redacted; the complete original interface stanzas are preserved, so the files are **not deployable backups**.
+The linked files now provide **full substantive sanitized configurations from the saved 9 November 2026 CML export**. All exported interface stanzas, including unused ports, are included (ACC1 19, ACC2 19, DIST1 36, DIST2 32). Credential-bearing lines are redacted; the complete original interface stanzas are preserved, so the files are **not deployable backups**.
 
 ## Sanitized full device snapshots
 
@@ -49,11 +49,11 @@ DIST1 and DIST2 host the HQ SVIs and share HSRP virtual gateways. **HSRP version
 
 OSPF **process 10 / area 0** uses explicit router IDs and `passive-interface default`. Routed uplinks to HQ EDGE1/EDGE2 are non-passive and have message-digest authentication configured. The authentication keys were removed from the published sanitized configs.
 
-## Important follow-up checks from the saved export
+## Historical follow-up checks from the 2 November export
 
-1. **PBR ACL reference:** DIST1's route-map matches `ACL-VLAN10-ASA-TEST`, but its defined extended ACL is `ACL-VLAN-10-ASA-TEST`. The mismatch means the intended ACL-based match should **not be assumed functional** from this export. Check the current config before changing or claiming behavior.
-2. **PBR resilience:** The saved export applies `PBR-VLAN10-ASA` to DIST1's VLAN 10 SVI, while DIST2 has no matching policy. Test the path after HSRP failover.
-3. **Trunk allowed VLANs:** ACC2's Po21/Po22 permit VLAN 998 but not 70, whereas their DIST-side Po21/Po22 permit VLAN 70 but not 998. Confirm whether this asymmetry is intentional.
+1. **Earlier PBR ACL reference (2 November only):** DIST1's route-map matches `ACL-VLAN10-ASA-TEST`, but its defined extended ACL is `ACL-VLAN-10-ASA-TEST`. The mismatch means the intended ACL-based match should **not be assumed functional** from this export. Check the current config before changing or claiming behavior.
+2. **Earlier PBR design (2 November only):** The saved export applies `PBR-VLAN10-ASA` to DIST1's VLAN 10 SVI, while DIST2 has no matching policy. Test the path after HSRP failover.
+3. **Earlier trunk allowed VLANs (revalidate):** ACC2's Po21/Po22 permit VLAN 998 but not 70, whereas their DIST-side Po21/Po22 permit VLAN 70 but not 998. Confirm whether this asymmetry is intentional.
 4. **DHCP snooping:** Trusted uplinks are configured, but verify whether snooping is enabled globally and per VLAN in the running switch configuration.
 5. **OSPF authentication:** Message-digest authentication requires matching keys on both ends. The publicly shared files intentionally omit them.
 
@@ -73,6 +73,8 @@ show ip access-lists
 show ip dhcp snooping
 ```
 
-These are next-step verification commands; outputs have **not** been attached to this snapshot.
+The **9 November** saved DIST1/DIST2 configurations no longer contain the earlier VLAN10 SVI PBR attachment; branch and HQ edge PBR remain present. DIST2's subsequent **Null0** fallback was reported by the lab owner after the 9 November export and is not yet present in its linked saved file. See [latest configuration review](latest-cml-config-snapshot-2026-11-09.md).
+
+These commands are next-step verification examples; current outputs have not been attached.
 
 [Back to README](../README.md)

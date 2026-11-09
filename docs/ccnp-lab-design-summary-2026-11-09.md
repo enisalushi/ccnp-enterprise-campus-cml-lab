@@ -23,7 +23,7 @@ The 2 November export contained **28 nodes**, **51 links**, and **20 saved confi
 | Dynamic PAT | VLAN 10 `10.10.10.138` → ASA outside `192.0.2.20`; previous live ICMP test **173/173** replies | Passed in tested scenario |
 | VLAN 10 HSRP | DIST1 → DIST2 switchover with **zero observed ping loss** in that run | Passed in tested scenario |
 | ASA policy | Five final `packet-tracer` checks returned expected ALLOW/DROP | Passed |
-| Default-route design | DIST1/DIST2 route via ASA `10.255.100.4` **AD 1**; Null0 fallback default **AD 100**; EDGE and branch PBR attachments checked | Configured / checked |
+| Default-route design | DIST1/DIST2 route via ASA `10.255.100.4` **AD 1**; DIST1 has a Null0 default in saved config; DIST2 Null0 added after upload (user-confirmed; exact AD not captured). EDGE and branch PBR attachments checked | Configured / checked |
 | IP SLA 10 | Probe to ASA inside `10.255.100.4` from `Vlan80`, **RTT 1 ms; 31 successes; 0 failures; return OK** | Passed |
 | Enhanced Object Tracking | `track` command unrecognized on **IOL-L2 IOS-XE 17.18.2** | Blocked |
 | Real branch-client Internet connection | ASA policy simulation passed, but end-to-end connection not demonstrated | Pending |
@@ -51,9 +51,9 @@ This proves state preservation for that tested flow. It **does not** establish z
 
 ## Default routing, inspection and limitations
 
-DIST1/DIST2 used a static default route via ASA inside `10.255.100.4`, AD **1**, plus a floating default to `Null0`, AD **100**. This is intended to take precedence over OSPF-learned defaults with AD **110**, preventing fallback that bypasses the ASA. However, the primary static route can remain installed even when the ASA is unreachable; a blackhole is then possible without route tracking.
+DIST1/DIST2 use a static default route via ASA inside `10.255.100.4`, AD **1**. DIST1's saved file includes a floating default to `Null0` with AD **100**. DIST2's uploaded 9 November file has only the ASA default; the lab owner **added Null0 afterward** (exact administrative distance awaits a newer export). This is intended to take precedence over OSPF-learned defaults with AD **110**, preventing fallback that bypasses the ASA. However, the primary static route can remain installed even when the ASA is unreachable; a blackhole is then possible without route tracking.
 
-A previous **2 November** export showed DIST1 PBR with an ACL naming mismatch (`ACL-VLAN10-ASA-TEST` versus `ACL-VLAN-10-ASA-TEST`) and no matching DIST2 VLAN10 PBR. The newer conversation verifies subsequent routing checks but does not contain a newer full config export proving whether that exact ACL mismatch was fixed.
+A previous **2 November** export showed DIST1 PBR with an ACL naming mismatch (`ACL-VLAN10-ASA-TEST` versus `ACL-VLAN-10-ASA-TEST`) and no matching DIST2 VLAN10 PBR. The 9 November uploaded export does not show the former distribution SVI PBR attachment, so this old naming issue should not be treated as a current active policy defect. Confirm actual current forwarding policy.
 
 ## Stage 1.13: IP SLA / object tracking
 
