@@ -2,7 +2,7 @@
 
 Run these commands in **Cisco CML → select the device → Console**, from **Privileged EXEC** (`enable` if needed). Take a real screenshot with the **hostname, command and decisive output visible**, then upload the screenshots in our chat for review. No CML YAML or raw secrets should be committed.
 
-## Batch 1  Campus and routing
+## Batch 1:  Campus and routing
 
 **AMS-HQ-ACC1  EtherChannel and 802.1Q trunks**
 
@@ -45,7 +45,7 @@ show ip route 0.0.0.0
 
 Captures the alternate ISP and routing state. Name: `routing/edge2-bgp-track.png`.
 
-## Batch 2  Branch, GRE/IPsec and forwarding path
+## Batch 2:  Branch, GRE/IPsec and forwarding path
 
 **RTM-BR-R1 — Tunnel10, OSPF and IKE/IPsec**
 
@@ -69,7 +69,7 @@ show vrrp brief
 
 Second tunnel and branch default-gateway redundancy. Names: `vpn/br-r2-ipsec.png`, `campus/br-r2-vrrp.png`.
 
-## Batch 3  QoS
+## Batch 3:  QoS
 
 **AMS-HQ-EDGE1 — ISP-A shaping and GRE QoS**
 
@@ -89,7 +89,7 @@ show policy-map interface Tunnel20
 
 Second provider, different edge and tunnel. Name: `qos/edge2-isp-gre.png`.
 
-## Batch 4  ASA NAT, connection state and application traffic
+## Batch 4:  ASA NAT, connection state and application traffic
 
 **The ASA that is CURRENTLY Active (FW1 or FW2)**
 
