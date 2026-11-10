@@ -1,8 +1,8 @@
-# CCNP Enterprise Campus — CLI Evidence Capture Plan
+# CCNP Enterprise Campus  CLI Evidence Capture Plan
 
 Run these commands in **Cisco CML → select the device → Console**, from **Privileged EXEC** (`enable` if needed). Take a real screenshot with the **hostname, command and decisive output visible**, then upload the screenshots in our chat for review. No CML YAML or raw secrets should be committed.
 
-## Batch 1 — Campus and routing
+## Batch 1  Campus and routing
 
 **AMS-HQ-ACC1 — EtherChannel and 802.1Q trunks**
 
@@ -24,7 +24,7 @@ show ip ospf neighbor
 
 Document the Active/Standby gateway roles and OSPF FULL adjacencies. Two images: `campus/dist1-hsrp.png`, `campus/dist2-hsrp.png`.
 
-**AMS-HQ-EDGE1 — OSPF, BGP and ISP-A track**
+**AMS-HQ-EDGE1  OSPF, BGP and ISP-A track**
 
 ```cisco
 show ip ospf neighbor
@@ -35,7 +35,7 @@ show ip route 0.0.0.0
 
 OSPF neighbor FULL and BGP State/PfxRcd numeric (rather than Idle/Active) are meaningful. Names: `routing/edge1-ospf.png`, `routing/edge1-bgp.png`, `routing/edge1-track.png`.
 
-**AMS-HQ-EDGE2 — BGP and ISP-B track**
+**AMS-HQ-EDGE2  BGP and ISP-B track**
 
 ```cisco
 show bgp ipv4 unicast summary
@@ -59,7 +59,7 @@ traceroute 10.10.70.10
 
 IKEv1 `QM_IDLE` (when applicable) establishes a negotiated SA; real IPsec forwarding requires **encapsulation and decapsulation counters increasing** during generated tunnel traffic. Traceroute documents only the observed hop path, not encryption. Names: `vpn/br-r1-isakmp.png`, `vpn/br-r1-ipsec.png`, `routing/br-r1-traceroute.png`.
 
-**RTM-BR-R2 — Tunnel20 and VRRP**
+**RTM-BR-R2  Tunnel20 and VRRP**
 
 ```cisco
 show crypto isakmp sa
@@ -69,7 +69,7 @@ show vrrp brief
 
 Second tunnel and branch default-gateway redundancy. Names: `vpn/br-r2-ipsec.png`, `campus/br-r2-vrrp.png`.
 
-## Batch 3 — QoS
+## Batch 3  QoS
 
 **AMS-HQ-EDGE1 — ISP-A shaping and GRE QoS**
 
@@ -80,7 +80,7 @@ show policy-map interface Tunnel10
 
 Saved config attaches WAN shaper to `Ethernet0/2` and GRE QoS to `Tunnel10`. Capture policy names, shaping rate, traffic class counters and drops if present. Counter increases under traffic provide stronger evidence than the policy alone. Names: `qos/edge1-isp-shaping.png`, `qos/edge1-gre-qos.png`.
 
-**AMS-HQ-EDGE2 — ISP-B and GRE QoS**
+**AMS-HQ-EDGE2  ISP-B and GRE QoS**
 
 ```cisco
 show policy-map interface Ethernet0/2
@@ -89,7 +89,7 @@ show policy-map interface Tunnel20
 
 Second provider, different edge and tunnel. Name: `qos/edge2-isp-gre.png`.
 
-## Batch 4 — ASA NAT, connection state and application traffic
+## Batch 4  ASA NAT, connection state and application traffic
 
 **The ASA that is CURRENTLY Active (FW1 or FW2)**
 
@@ -103,7 +103,7 @@ show access-list
 
 First confirm which chassis is Active with `show failover`. `show nat detail` demonstrates configured DMZ static NAT. Generate real HQ VLAN10 traffic to populate dynamic PAT `show xlate`; initiate HTTP to the published DMZ service for `show conn`. Names: `security/asa-failover.png`, `security/asa-nat.png`, `security/asa-xlate.png`, `security/asa-conn.png`.
 
-**AMS-HQ-EDGE1 — Actual DMZ HTTP response**
+**AMS-HQ-EDGE1  Actual DMZ HTTP response**
 
 ```cisco
 telnet 192.0.2.22 8080
