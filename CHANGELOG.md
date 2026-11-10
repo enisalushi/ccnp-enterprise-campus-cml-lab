@@ -60,8 +60,3 @@
 - Added detailed WAN/branch, ASA, services and review-finding documents.
 - Retained the original YAML outside GitHub and explicitly excluded credentials/certificates from public snapshots.
 
-## Upcoming
-
-- Re-export later CML changes and collect live verification evidence.
-- Validate final firewall ACL policy, Internet paths and HA failover.
-- Continue publishing new milestones as commits.
