@@ -4,7 +4,7 @@ Run these commands in **Cisco CML → select the device → Console**, from **Pr
 
 ## Batch 1  Campus and routing
 
-**AMS-HQ-ACC1 — EtherChannel and 802.1Q trunks**
+**AMS-HQ-ACC1  EtherChannel and 802.1Q trunks**
 
 ```cisco
 show etherchannel summary
@@ -13,7 +13,7 @@ show interfaces trunk
 
 Look for correctly bundled Po11/Po12 member links, trunk VLANs and forwarding status. Save as `campus/acc1-etherchannel.png`.
 
-**AMS-HQ-DIST1 and AMS-HQ-DIST2 — First-hop redundancy and OSPF**
+**AMS-HQ-DIST1 and AMS-HQ-DIST2  First-hop redundancy and OSPF**
 
 Run on **both** devices:
 
@@ -45,7 +45,7 @@ show ip route 0.0.0.0
 
 Captures the alternate ISP and routing state. Name: `routing/edge2-bgp-track.png`.
 
-## Batch 2 — Branch, GRE/IPsec and forwarding path
+## Batch 2  Branch, GRE/IPsec and forwarding path
 
 **RTM-BR-R1 — Tunnel10, OSPF and IKE/IPsec**
 
